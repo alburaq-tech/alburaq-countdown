@@ -65,21 +65,6 @@ function PkgCard({pkg, onUpdate, editMode, onClick}) {
     onUpdate(Object.assign({}, pkg, {buses: pkg.buses.concat({id: nid, lbl: 'BUS ' + nid, cap: 45, fil: 0})}));
   }
 
-  function setDisplayRemaining(val) {
-    var n = parseInt(val);
-    if (isNaN(n) || n < 0) n = 0;
-    if (n > cap) n = cap;
-    onUpdate(Object.assign({}, pkg, {displayRemainingPax: n}));
-  }
-
-  function resetDisplayRemaining() {
-    var updated = Object.assign({}, pkg);
-    delete updated.displayRemainingPax;
-    onUpdate(updated);
-  }
-
-  const isOverridden = pkg.displayRemainingPax != null;
-
   return (
     <div className={'pkg-card' + (editMode ? ' pkg-card-edit' : '') + (isSoldOut && !editMode ? ' pkg-card-soldout' : '')} onClick={editMode ? undefined : (isSoldOut ? undefined : onClick)}>
       <div className="pkg-card-top-bar"/>
@@ -108,28 +93,7 @@ function PkgCard({pkg, onUpdate, editMode, onClick}) {
           <div className="pkg-card-pax-label">SISA PAX</div>
           <div className="pkg-card-pax-num" style={{color: urgColor, animation: rem === 0 ? 'flash-red 1.5s ease-in-out infinite' : 'glowNum 2s ease-in-out infinite'}}>{rem}</div>
           <div className="pkg-card-pax-sub">dari {cap} kursi</div>
-          {isOverridden && !editMode && (
-            <div className="pkg-card-pax-override" onClick={function(e){e.stopPropagation();}}>
-              <input type="text" inputMode="numeric" className="pkg-card-pax-override-input"
-                value={pkg.displayRemainingPax}
-                onChange={function(e){
-                  var raw = e.target.value.replace(/[^0-9]/g, '');
-                  setDisplayRemaining(raw);
-                }}
-                onBlur={function(e){
-                  var n = parseInt(e.target.value);
-                  if (isNaN(n)) setDisplayRemaining(backendRem);
-                }}
-              />
-              <span className="pkg-card-pax-override-label">edit sisa</span>
-              <button className="pkg-card-pax-override-reset" onClick={resetDisplayRemaining} title="Reset ke data backend">↩</button>
-            </div>
-          )}
-          {!isOverridden && !editMode && (
-            <div className="pkg-card-pax-override" onClick={function(e){e.stopPropagation(); setDisplayRemaining(backendRem);}}>
-              <span className="pkg-card-pax-override-hint">✏ edit sisa</span>
-            </div>
-          )}
+
         </div>
       </div>
       {isSoldOut && !editMode ? (

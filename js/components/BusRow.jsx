@@ -15,7 +15,7 @@ function BusRow({bus, onEdit, editMode}) {
   const st = seatSt(bus.fil, bus.cap);
   const seats = Array.from({length: bus.cap}, function(_, i) {
     if (i < effectiveFil) return 'filled';
-    if (i < effectiveFil + locked) return 'locked';
+    if (i >= bus.cap - locked) return 'locked';
     return 'empty';
   });
   const cfgs = {
