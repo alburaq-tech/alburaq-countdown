@@ -5,13 +5,21 @@ const { useState } = React;
 
 function CDModal({cd, onSave, onClose}) {
   const diff = Math.max(0, Math.floor((new Date(cd.iso) - Date.now()) / 1000));
-  const [h, setH] = useState(Math.floor(diff / 3600));
-  const [m, setM] = useState(Math.floor((diff % 3600) / 60));
-  const [s, setS] = useState(diff % 60);
+  const [h, setH] = useState(String(Math.floor(diff / 3600)));
+  const [m, setM] = useState(String(Math.floor((diff % 3600) / 60)));
+  const [s, setS] = useState(String(diff % 60));
   const [lbl, setLbl] = useState(cd.lbl);
 
   function apply() {
-    onSave({lbl: lbl, iso: new Date(Date.now() + (h * 3600 + m * 60 + s) * 1000).toISOString()});
+    var hn = Math.min(99, Math.max(0, parseInt(h) || 0));
+    var mn = Math.min(59, Math.max(0, parseInt(m) || 0));
+    var sn = Math.min(59, Math.max(0, parseInt(s) || 0));
+    onSave({lbl: lbl, iso: new Date(Date.now() + (hn * 3600 + mn * 60 + sn) * 1000).toISOString()});
+  }
+
+  function clampOnBlur(val, max) {
+    var n = Math.min(max, Math.max(0, parseInt(val) || 0));
+    return String(n);
   }
 
   return (
@@ -30,7 +38,15 @@ function CDModal({cd, onSave, onClose}) {
               {[{v:h, set:setH, max:99, l:'Jam'}, {v:m, set:setM, max:59, l:'Menit'}, {v:s, set:setS, max:59, l:'Detik'}].map(function(item, i){
                 return (
                   <div key={i} className="cd-modal-dur-item">
-                    <input type="number" min="0" max={item.max} value={item.v} className="inp inp-w-md" onChange={function(e){item.set(Number(e.target.value))}}/>
+                    <input type="text" inputMode="numeric" value={item.v} className="inp inp-w-md"
+                      onChange={function(e){
+                        var raw = e.target.value.replace(/[^0-9]/g, '');
+                        item.set(raw);
+                      }}
+                      onBlur={function(e){
+                        item.set(clampOnBlur(e.target.value, item.max));
+                      }}
+                    />
                     <span className="cd-modal-dur-label">{item.l}</span>
                   </div>
                 );

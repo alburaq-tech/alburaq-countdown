@@ -14,5 +14,6 @@ window.Alburaq.constants = {
 
 window.Alburaq.tweakDefaults = /*EDITMODE-BEGIN*/{
   "showCountdown": true,
+  "showNotif": true,
   "editMode": false
 }/*EDITMODE-END*/;

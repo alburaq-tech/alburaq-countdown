@@ -313,7 +313,7 @@ body {
     flex: 0 0 100%;
     scroll-snap-align: start;
     min-height: 0;
-    padding: 0 16px
+    padding: 0 16px 16px 16px
 }
 
 .pkg-grid-item-soldout {
@@ -323,7 +323,7 @@ body {
 /* ── Countdown ── */
 .cd-wrap {
     margin-bottom: 16px;
-    padding: 16px 0 0;
+    padding: 16px 16px 0;
     flex-shrink: 0
 }
 
@@ -423,11 +423,12 @@ body {
 .pkg-card-header {
     background: #FDF8EC;
     border-bottom: 1px solid rgba(174, 140, 47, .15);
-    padding: 24px 24px 20px;
+    padding: 28px 28px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px
+    gap: 24px;
+    flex: 5
 }
 
 .pkg-card-info {
@@ -436,33 +437,33 @@ body {
 
 .pkg-card-name {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
+    font-size: 68px;
     font-weight: 700;
     color: #1C1C1C;
-    line-height: 1.2
+    line-height: 1.1
 }
 
 .pkg-card-meta {
     display: flex;
     gap: 16px;
-    margin-top: 10px;
+    margin-top: 12px;
     flex-wrap: wrap;
     align-items: center
 }
 
 .pkg-card-meta-text {
-    font-size: 14px;
+    font-size: 16px;
     color: rgba(28, 28, 28, .5);
     font-weight: 600
 }
 
 .pkg-card-price {
-    font-size: 18px;
+    font-size: 44px;
     font-weight: 800;
     color: #AE8C2F;
     background: rgba(174, 140, 47, .1);
-    padding: 4px 12px;
-    border-radius: 8px
+    padding: 8px 18px;
+    border-radius: 10px
 }
 
 .pkg-card-pax-box {
@@ -470,23 +471,23 @@ body {
     flex-shrink: 0;
     background: #FFFFFF;
     border-radius: 16px;
-    padding: 14px 24px;
+    padding: 18px 28px;
     border: 2px solid rgba(174, 140, 47, .2);
     box-shadow: 0 4px 16px rgba(174, 140, 47, .12)
 }
 
 .pkg-card-pax-label {
-    font-size: 10px;
+    font-size: 22px;
     color: #AE8C2F;
     letter-spacing: 3px;
     text-transform: uppercase;
     font-family: 'Cinzel', serif;
     font-weight: 700;
-    margin-bottom: 6px
+    margin-bottom: 8px
 }
 
 .pkg-card-pax-num {
-    font-size: 72px;
+    font-size: 192px;
     font-weight: 700;
     font-family: 'Playfair Display', serif;
     line-height: 1;
@@ -495,10 +496,10 @@ body {
 }
 
 .pkg-card-pax-sub {
-    font-size: 11px;
+    font-size: 26px;
     color: rgba(28, 28, 28, .35);
     font-weight: 600;
-    margin-top: 4px
+    margin-top: 6px
 }
 
 .pkg-card-bar-wrap {
@@ -540,11 +541,10 @@ body {
 }
 
 .pkg-card-buses {
-    padding: 10px 14px;
+    padding: 8px 14px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 7px;
-    flex: 1;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
     overflow-y: auto;
     min-height: 0
 }

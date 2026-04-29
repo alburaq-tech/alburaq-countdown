@@ -80,7 +80,6 @@ function PkgCard({pkg, onUpdate, editMode, onClick}) {
             })()}
             {editMode && <button className="add-bus-btn" onClick={addBus}>+ Tambah Bus</button>}
           </div>
-          {!editMode && <div className="pkg-card-footer"><span className="pkg-card-footer-text">KLIK UNTUK FULLSCREEN →</span></div>}
         </React.Fragment>
       )}
     </div>

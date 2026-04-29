@@ -89,6 +89,7 @@ function App() {
         </div>
         <div className="header-right">
           {editMode && <div className="edit-badge">✏ EDIT MODE</div>}
+          <button className="gear-btn" onClick={function(){window.postMessage({ type: '__activate_edit_mode' }, '*')}} title="Tweaks">🎨</button>
           <button className="gear-btn" onClick={function(){setShowCd(true)}} title="Setting Countdown">⚙️</button>
           <div className="live-badge">
             <span className="live-dot"/>
@@ -137,7 +138,7 @@ function App() {
         </div>
       </main>
 
-      <BuyNotif packages={state.packages} interval={5000}/>
+      {tweaks.showNotif && <BuyNotif packages={state.packages} interval={5000}/>}
 
       {focusPkg && <FullView pkg={focusPkg} onUpdate={updPkg} onBack={function(){setFocusId(null)}} editMode={editMode}/>}
       {showCd && <CDModal cd={state.cd} onClose={function(){setShowCd(false)}} onSave={function(c){setState(function(s){return Object.assign({}, s, {cd: c});}); dataService.saveCountdown(c); setShowCd(false);}}/>}
@@ -145,6 +146,7 @@ function App() {
       <window.TweaksPanel>
         <window.TweakSection label="Tampilan"/>
         <window.TweakToggle label="Tampilkan Countdown" value={tweaks.showCountdown} onChange={function(v){setTweak('showCountdown', v)}}/>
+        <window.TweakToggle label="Tampilkan Notifikasi" value={tweaks.showNotif} onChange={function(v){setTweak('showNotif', v)}}/>
         <window.TweakToggle label="Mode Edit Data" value={tweaks.editMode} onChange={function(v){setTweak('editMode', v)}}/>
         <window.TweakSection label="Timer"/>
         <window.TweakButton label="✏ Edit Countdown" onClick={function(){setShowCd(true)}}/>

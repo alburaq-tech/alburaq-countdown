@@ -13,7 +13,7 @@ window.Alburaq = window.Alburaq || {};
 window.Alburaq.dummyData = {
   // Increment DATA_VERSION when dummy data changes.
   // This invalidates stale localStorage cache so fresh data is always loaded.
-  _version: 11,
+  _version: 13,
 
   packages: [
     {
@@ -24,7 +24,12 @@ window.Alburaq.dummyData = {
       price: 'Rp 38.500.000',
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 45, fil: 45 },
-        { id: 2, lbl: 'BUS 2', cap: 45, fil: 37 }
+        { id: 2, lbl: 'BUS 2', cap: 45, fil: 37 },
+        { id: 3, lbl: 'BUS 3', cap: 45, fil: 28 },
+        { id: 4, lbl: 'BUS 4', cap: 45, fil: 15 },
+        { id: 5, lbl: 'BUS 5', cap: 45, fil: 8 },
+        { id: 6, lbl: 'BUS 6', cap: 45, fil: 3 },
+        { id: 7, lbl: 'BUS 7', cap: 45, fil: 2 }
       ]
     },
     {
@@ -35,7 +40,10 @@ window.Alburaq.dummyData = {
       price: 'Rp 28.500.000',
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 45, fil: 45 },
-        { id: 2, lbl: 'BUS 2', cap: 45, fil: 45 }
+        { id: 2, lbl: 'BUS 2', cap: 45, fil: 45 },
+        { id: 3, lbl: 'BUS 3', cap: 45, fil: 30 },
+        { id: 4, lbl: 'BUS 4', cap: 45, fil: 12 },
+        { id: 5, lbl: 'BUS 5', cap: 45, fil: 0 }
       ]
     },
     {
