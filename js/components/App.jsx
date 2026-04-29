@@ -26,7 +26,6 @@ function App() {
   const [showCd, setShowCd]     = useState(false);
 
   const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
-  const [scrolled, setScrolled] = useState(false);
 
   // Expose package updater for SSE-triggered refreshes from BuyNotif
   window.Alburaq._onPackagesUpdate = function(pkgs) {
@@ -44,12 +43,6 @@ function App() {
 
   useEffect(function(){ helpers.saveSt(state); }, [state]);
   useEffect(function(){ setEditMode(tweaks.editMode); }, [tweaks.editMode]);
-
-  useEffect(function(){
-    function onScroll(){ setScrolled(window.scrollY > 80); }
-    window.addEventListener('scroll', onScroll, {passive: true});
-    return function(){ window.removeEventListener('scroll', onScroll); };
-  }, []);
 
   function updPkg(u) {
     setState(function(s){ return Object.assign({}, s, {packages: s.packages.map(function(p){ return p.id === u.id ? u : p; })}); });
@@ -107,13 +100,12 @@ function App() {
       <Ticker packages={state.packages}/>
 
       <main className="main">
-        <div className='overlay'></div>
         {tweaks.showCountdown && (
-          <div className={'cd-wrap' + (scrolled ? ' cd-stuck' : '')}>
+          <div className="cd-wrap">
             <CDTimer iso={state.cd.iso} lbl={state.cd.lbl}/>
           </div>
         )}
-        <div className={'pkg-grid' + (scrolled ? ' pkg-grid-scrolled' : '')}>
+        <div className="pkg-grid">
           {state.packages.filter(function(pkg){
             var cap = pkg.buses.reduce(function(s, b){ return s + b.cap; }, 0);
             var fil = pkg.buses.reduce(function(s, b){ return s + Math.min(b.fil, b.cap); }, 0);
@@ -126,38 +118,24 @@ function App() {
               </div>
             );
           })}
+          {(function(){
+            var soldOutPkgs = state.packages.filter(function(pkg){
+              var cap = pkg.buses.reduce(function(s, b){ return s + b.cap; }, 0);
+              var fil = pkg.buses.reduce(function(s, b){ return s + Math.min(b.fil, b.cap); }, 0);
+              return cap - fil === 0;
+            });
+            if (!soldOutPkgs.length) return null;
+            return soldOutPkgs.map(function(pkg){
+              return (
+                <div key={pkg.id} className="pkg-grid-item pkg-grid-item-soldout">
+                  <PkgCard pkg={pkg} onUpdate={updPkg} editMode={editMode} onClick={function(){setFocusId(pkg.id)}}/>
+                  {editMode && <button className="del-btn" onClick={function(){delPkg(pkg.id)}}>×</button>}
+                </div>
+              );
+            });
+          })()}
         </div>
-        {(function(){
-          var soldOutPkgs = state.packages.filter(function(pkg){
-            var cap = pkg.buses.reduce(function(s, b){ return s + b.cap; }, 0);
-            var fil = pkg.buses.reduce(function(s, b){ return s + Math.min(b.fil, b.cap); }, 0);
-            return cap - fil === 0;
-          });
-          if (!soldOutPkgs.length) return null;
-          return (
-            <div className="soldout-section">
-              <div className="soldout-section-label">PAKET SUDAH SOLD OUT!</div>
-              <div className="soldout-grid">
-                {soldOutPkgs.map(function(pkg){
-                  return (
-                    <div key={pkg.id} className="pkg-grid-item">
-                      <PkgCard pkg={pkg} onUpdate={updPkg} editMode={editMode} onClick={function(){setFocusId(pkg.id)}}/>
-                      {editMode && <button className="del-btn" onClick={function(){delPkg(pkg.id)}}>×</button>}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })()}
-        {editMode && <button className="add-pkg-btn" onClick={addPkg}>+ Tambah Paket Umroh</button>}
       </main>
-
-      <div className="footer-bar"/>
-      <footer className="footer">
-        <span className="footer-left">ALBURAQ UNITED INDONESIA © 2025</span>
-        <span className="footer-right">Data diperbarui real-time</span>
-      </footer>
 
       <BuyNotif packages={state.packages} interval={5000}/>
 

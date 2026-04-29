@@ -151,10 +151,11 @@ body {
 
 /* ── App Layout ── */
 .app {
-    min-height: 100vh;
+    height: 100vh;
     background: #FFFEF7;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
+    overflow: hidden
 }
 
 /* ── Header ── */
@@ -255,10 +256,7 @@ body {
     height: 34px;
     display: flex;
     align-items: center;
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    z-index: 99
+    flex-shrink: 0
 }
 
 .ticker-text {
@@ -278,26 +276,55 @@ body {
     padding: 0 32px;
     max-width: 1280px;
     margin: 0 auto;
-    width: 100%
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0
 }
 
 .pkg-grid {
-    column-count: 1;
-    column-gap: 22px
+    display: flex;
+    flex: 1;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0
+}
+
+.pkg-grid::-webkit-scrollbar {
+    height: 6px
+}
+
+.pkg-grid::-webkit-scrollbar-track {
+    background: rgba(174, 140, 47, .08);
+    border-radius: 3px
+}
+
+.pkg-grid::-webkit-scrollbar-thumb {
+    background: #AE8C2F;
+    border-radius: 3px
 }
 
 .pkg-grid-item {
-    break-inside: avoid;
-    margin-bottom: 22px
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    min-height: 0;
+    padding: 0 16px
+}
+
+.pkg-grid-item-soldout {
+    border-left: 3px dashed rgba(192, 57, 43, .3)
 }
 
 /* ── Countdown ── */
 .cd-wrap {
-    margin-bottom: 26px;
-    padding: 26px 0;
-    position: sticky;
-    top: 34px;
-    z-index: 98;
+    margin-bottom: 16px;
+    padding: 16px 0 0;
+    flex-shrink: 0
 }
 
 .cd-box {
@@ -305,14 +332,7 @@ body {
     border-radius: 16px;
     padding: 20px 36px;
     text-align: center;
-    box-shadow: 0 4px 32px rgba(28, 28, 28, .15);
-    max-width: 1280px;
-    margin: 0 auto;
-    transition: max-width .5s cubic-bezier(.4,0,.2,1)
-}
-
-.cd-stuck .cd-box {
-    max-width: 420px
+    box-shadow: 0 4px 32px rgba(28, 28, 28, .15)
 }
 
 .cd-label {
@@ -375,7 +395,10 @@ body {
     cursor: pointer;
     box-shadow: 0 4px 24px rgba(28, 28, 28, .08);
     transition: transform .18s, box-shadow .18s;
-    animation: fadeInUp .4s ease
+    animation: fadeInUp .4s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%
 }
 
 .pkg-card:hover {
@@ -520,7 +543,10 @@ body {
     padding: 10px 14px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 7px
+    gap: 7px;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0
 }
 
 .pkg-card-footer {
@@ -1200,18 +1226,19 @@ body {
 
 /* ── Buttons ── */
 .add-pkg-btn {
-    margin-top: 20px;
+    margin-top: 12px;
     width: 100%;
     background: #FDF8EC;
     border: 2px dashed rgba(174, 140, 47, .3);
     border-radius: 18px;
     color: #AE8C2F;
-    padding: 18px;
+    padding: 14px;
     cursor: pointer;
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 2px;
-    text-transform: uppercase
+    text-transform: uppercase;
+    flex-shrink: 0
 }
 
 .del-btn {
@@ -1313,7 +1340,12 @@ body {
 
 .pkg-card-soldout-body {
     padding: 16px 24px;
-    text-align: center
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
 }
 
 .soldout-badge {
@@ -1348,41 +1380,8 @@ body {
     }
 }
 
-/* ── Sold Out Section ── */
-.soldout-section {
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px dashed rgba(174, 140, 47, .25)
-}
-
-.soldout-section-label {
-    font-size: 10px;
-    color: rgba(192, 57, 43, .5);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    margin-bottom: 16px;
-    text-align: center
-}
-
-.soldout-grid {
-    column-count: 1;
-    column-gap: 16px
-}
-
-.soldout-grid .pkg-grid-item {
-    break-inside: avoid;
-    margin-bottom: 16px
-}
-
-/* ── Responsive Masonry ── */
+/* ── Responsive ── */
 @media (max-width: 640px) {
-    .pkg-grid,
-    .soldout-grid {
-        column-count: 1
-    }
-
     .pkg-card-buses {
         grid-template-columns: 1fr
     }
