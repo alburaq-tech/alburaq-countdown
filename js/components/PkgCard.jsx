@@ -1,6 +1,18 @@
 // ── PkgCard Component ──
 // Package card showing name, dates, price, pax remaining, and bus rows.
-// Depends on: Alburaq.constants (C), Alburaq.helpers (seatSt), Alburaq.BusRow
+// Depends on: Alburaq.constants (C), Alburaq.helpers (seatSt)
+//
+// Live override: displayRemainingPax can be set per-package to override
+// the displayed remaining count. The actual sold count (fil) stays fixed.
+// Logic:
+//   cap = total seats (sum of bus caps)
+//   fil = sold pax (from backend, FIXED)
+//   backendRem = cap - fil (actual remaining)
+//   displayRem = pkg.displayRemainingPax ?? backendRem
+//   lockedSeats = backendRem - displayRem (seats hidden from display)
+//   Bus display: show buses based on fil (sold count is fixed),
+//     but remaining shown per bus = min(displayRem, busRem)
+//     locked seats per bus = busRem - displayed remaining
 
 const C = window.Alburaq.constants;
 const seatSt = window.Alburaq.helpers.seatSt;
@@ -10,11 +22,40 @@ const BusRow = window.Alburaq.BusRow;
 function PkgCard({pkg, onUpdate, editMode, onClick}) {
   const cap = pkg.buses.reduce(function(s, b){ return s + b.cap; }, 0);
   const fil = pkg.buses.reduce(function(s, b){ return s + clampFil(b.fil, b.cap); }, 0);
-  const rem = cap - fil, pct = Math.round(fil / cap * 100);
-  const isSoldOut = rem === 0;
+  const backendRem = cap - fil;
+
+  // Live override: displayRemainingPax
+  const displayRem = pkg.displayRemainingPax != null ? pkg.displayRemainingPax : backendRem;
+  const lockedSeats = Math.max(0, backendRem - displayRem);
+
+  const rem = displayRem, pct = cap > 0 ? Math.round(fil / cap * 100) : 0;
+  const isSoldOut = rem <= 0;
   const urgColor = isSoldOut ? C.red : rem <= 10 ? C.orange : C.g1;
   const pctColor = pct >= 90 ? C.red : pct >= 70 ? C.orange : C.g1;
   const barBg = pct >= 100 ? C.red : pct >= 80 ? 'linear-gradient(90deg,#AE8C2F,#C0621A)' : 'linear-gradient(90deg,#AE8C2F,#CBAA48)';
+
+  // Build display buses based on actual fil (sold count is fixed)
+  // Only show buses that have fil > 0, or at least 1 bus
+  const busCap = pkg.buses.length > 0 ? pkg.buses[0].cap : 45;
+  const visibleBuses = pkg.buses.filter(function(b){ return b.fil > 0; });
+  const busesToShow = visibleBuses.length ? visibleBuses : [pkg.buses[0]];
+  var remainingLocked = lockedSeats;
+  var remainingDisplayRem = displayRem;
+
+  const displayBuses = busesToShow.map(function(bus, i) {
+    var busRem = bus.cap - bus.fil;
+    var busDisplayRem = Math.min(remainingDisplayRem, busRem);
+    var busLocked = busRem - busDisplayRem;
+    remainingDisplayRem -= busDisplayRem;
+    return {
+      id: bus.id,
+      lbl: bus.lbl,
+      cap: bus.cap,
+      fil: bus.fil,
+      displayRem: busDisplayRem,
+      locked: busLocked
+    };
+  });
 
   function handleBusEdit(busId, updated) {
     onUpdate(Object.assign({}, pkg, {buses: pkg.buses.map(function(b){ return b.id === busId ? updated : b; })}));
@@ -23,6 +64,21 @@ function PkgCard({pkg, onUpdate, editMode, onClick}) {
     const nid = Math.max.apply(null, pkg.buses.map(function(b){ return b.id; })) + 1;
     onUpdate(Object.assign({}, pkg, {buses: pkg.buses.concat({id: nid, lbl: 'BUS ' + nid, cap: 45, fil: 0})}));
   }
+
+  function setDisplayRemaining(val) {
+    var n = parseInt(val);
+    if (isNaN(n) || n < 0) n = 0;
+    if (n > cap) n = cap;
+    onUpdate(Object.assign({}, pkg, {displayRemainingPax: n}));
+  }
+
+  function resetDisplayRemaining() {
+    var updated = Object.assign({}, pkg);
+    delete updated.displayRemainingPax;
+    onUpdate(updated);
+  }
+
+  const isOverridden = pkg.displayRemainingPax != null;
 
   return (
     <div className={'pkg-card' + (editMode ? ' pkg-card-edit' : '') + (isSoldOut && !editMode ? ' pkg-card-soldout' : '')} onClick={editMode ? undefined : (isSoldOut ? undefined : onClick)}>
@@ -52,6 +108,28 @@ function PkgCard({pkg, onUpdate, editMode, onClick}) {
           <div className="pkg-card-pax-label">SISA PAX</div>
           <div className="pkg-card-pax-num" style={{color: urgColor, animation: rem === 0 ? 'flash-red 1.5s ease-in-out infinite' : 'glowNum 2s ease-in-out infinite'}}>{rem}</div>
           <div className="pkg-card-pax-sub">dari {cap} kursi</div>
+          {isOverridden && !editMode && (
+            <div className="pkg-card-pax-override" onClick={function(e){e.stopPropagation();}}>
+              <input type="text" inputMode="numeric" className="pkg-card-pax-override-input"
+                value={pkg.displayRemainingPax}
+                onChange={function(e){
+                  var raw = e.target.value.replace(/[^0-9]/g, '');
+                  setDisplayRemaining(raw);
+                }}
+                onBlur={function(e){
+                  var n = parseInt(e.target.value);
+                  if (isNaN(n)) setDisplayRemaining(backendRem);
+                }}
+              />
+              <span className="pkg-card-pax-override-label">edit sisa</span>
+              <button className="pkg-card-pax-override-reset" onClick={resetDisplayRemaining} title="Reset ke data backend">↩</button>
+            </div>
+          )}
+          {!isOverridden && !editMode && (
+            <div className="pkg-card-pax-override" onClick={function(e){e.stopPropagation(); setDisplayRemaining(backendRem);}}>
+              <span className="pkg-card-pax-override-hint">✏ edit sisa</span>
+            </div>
+          )}
         </div>
       </div>
       {isSoldOut && !editMode ? (
@@ -71,13 +149,9 @@ function PkgCard({pkg, onUpdate, editMode, onClick}) {
             </div>
           </div>
           <div className="pkg-card-buses">
-            {(function(){
-              const visible = pkg.buses.filter(function(b){ return b.fil > 0; });
-              const list = visible.length ? visible : [pkg.buses[0]];
-              return list.map(function(bus){
-                return <BusRow key={bus.id} bus={bus} editMode={editMode} onEdit={function(u){handleBusEdit(bus.id, u)}} />;
-              });
-            })()}
+            {displayBuses.map(function(bus){
+              return <BusRow key={bus.id} bus={bus} editMode={editMode} onEdit={function(u){handleBusEdit(bus.id, u)}} />;
+            })}
             {editMode && <button className="add-bus-btn" onClick={addBus}>+ Tambah Bus</button>}
           </div>
         </React.Fragment>

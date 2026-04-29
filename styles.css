@@ -502,6 +502,69 @@ body {
     margin-top: 6px
 }
 
+.pkg-card-pax-override {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center
+}
+
+.pkg-card-pax-override-input {
+    width: 60px;
+    text-align: center;
+    background: rgba(174, 140, 47, .12);
+    border: 1px solid rgba(174, 140, 47, .4);
+    border-radius: 6px;
+    color: #1C1C1C;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    padding: 4px 6px;
+    outline: none
+}
+
+.pkg-card-pax-override-input:focus {
+    border-color: #AE8C2F;
+    background: rgba(174, 140, 47, .2)
+}
+
+.pkg-card-pax-override-label {
+    font-size: 10px;
+    color: rgba(28, 28, 28, .4);
+    letter-spacing: 1px;
+    text-transform: uppercase
+}
+
+.pkg-card-pax-override-reset {
+    appearance: none;
+    border: none;
+    background: rgba(192, 57, 43, .15);
+    color: #C0392B;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 2px 6px;
+    line-height: 1
+}
+
+.pkg-card-pax-override-reset:hover {
+    background: rgba(192, 57, 43, .3)
+}
+
+.pkg-card-pax-override-hint {
+    font-size: 11px;
+    color: rgba(174, 140, 47, .6);
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600
+}
+
+.pkg-card-pax-override-hint:hover {
+    color: #AE8C2F
+}
+
 .pkg-card-bar-wrap {
     padding: 10px 24px;
     background: #F9F2DA
@@ -618,6 +681,27 @@ body {
     height: 10px;
     border-radius: 2px;
     transition: background .3s
+}
+
+.bus-seat-locked {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6px;
+    line-height: 1;
+    background: rgba(174, 140, 47, .25);
+    border: 1px solid rgba(174, 140, 47, .5)
+}
+
+.bus-locked-info {
+    font-size: 9px;
+    color: #AE8C2F;
+    font-weight: 700;
+    margin-top: 2px;
+    letter-spacing: .5px
 }
 
 .bus-status {
