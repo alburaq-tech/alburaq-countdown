@@ -298,7 +298,6 @@ body {
     position: sticky;
     top: 34px;
     z-index: 98;
-    background: #FFFEF7;
 }
 
 .cd-box {
@@ -306,7 +305,14 @@ body {
     border-radius: 16px;
     padding: 20px 36px;
     text-align: center;
-    box-shadow: 0 4px 32px rgba(28, 28, 28, .15)
+    box-shadow: 0 4px 32px rgba(28, 28, 28, .15);
+    max-width: 1280px;
+    margin: 0 auto;
+    transition: max-width .5s cubic-bezier(.4,0,.2,1)
+}
+
+.cd-stuck .cd-box {
+    max-width: 420px
 }
 
 .cd-label {
