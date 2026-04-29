@@ -166,10 +166,7 @@ body {
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 2px 20px rgba(174, 140, 47, .1);
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100
+    flex-shrink: 0
 }
 
 .header-left {
@@ -258,7 +255,10 @@ body {
     height: 34px;
     display: flex;
     align-items: center;
-    flex-shrink: 0
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 99
 }
 
 .ticker-text {
@@ -275,21 +275,15 @@ body {
 /* ── Main ── */
 .main {
     flex: 1;
-    padding: 26px 32px;
+    padding: 0 32px;
     max-width: 1280px;
     margin: 0 auto;
     width: 100%
 }
 
 .pkg-grid {
-    column-count: 2;
+    column-count: 1;
     column-gap: 22px
-}
-
-@media (max-width: 640px) {
-    .pkg-grid {
-        column-count: 1
-    }
 }
 
 .pkg-grid-item {
@@ -299,7 +293,12 @@ body {
 
 /* ── Countdown ── */
 .cd-wrap {
-    margin-bottom: 26px
+    margin-bottom: 26px;
+    padding: 26px 0;
+    position: sticky;
+    top: 34px;
+    z-index: 98;
+    background: #FFFEF7;
 }
 
 .cd-box {
@@ -513,8 +512,8 @@ body {
 
 .pkg-card-buses {
     padding: 10px 14px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 7px
 }
 
@@ -1362,14 +1361,8 @@ body {
 }
 
 .soldout-grid {
-    column-count: 2;
+    column-count: 1;
     column-gap: 16px
-}
-
-@media (max-width: 640px) {
-    .soldout-grid {
-        column-count: 1
-    }
 }
 
 .soldout-grid .pkg-grid-item {
@@ -1383,12 +1376,16 @@ body {
     .soldout-grid {
         column-count: 1
     }
+
+    .pkg-card-buses {
+        grid-template-columns: 1fr
+    }
 }
 
 /* ── Buy Notification Banner ── */
 .buy-notif {
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
     z-index: 9999;
@@ -1418,7 +1415,7 @@ body {
 @keyframes buyNotifIn {
     from {
         opacity: 0;
-        transform: translateY(-100%)
+        transform: translateY(100%)
     }
 
     to {
@@ -1435,7 +1432,7 @@ body {
 
     to {
         opacity: 0;
-        transform: translateY(-100%)
+        transform: translateY(100%)
     }
 }
 

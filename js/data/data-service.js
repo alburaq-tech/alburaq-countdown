@@ -19,8 +19,8 @@ window.Alburaq = window.Alburaq || {};
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ⚙️  CONFIGURATION — Change DATA_SOURCE to switch between dummy & API
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-var DATA_SOURCE = 'dummy';   // 'dummy' | 'api'
-var API_BASE_URL = '';        // e.g. 'https://api.example.com' — set when switching to 'api'
+var DATA_SOURCE = 'dummy';  // 'dummy' | 'api'
+var API_BASE_URL = 'http://localhost:3000';  // backend API server
 var API_HEADERS = {           // customize as needed (auth tokens, etc.)
   'Content-Type': 'application/json'
 };
@@ -128,6 +128,37 @@ window.Alburaq.dataService = {
       }).then(function(res) { return res.json(); });
     }
     return Promise.resolve(cd);
+  },
+
+  /**
+   * Fetch last closing event.
+   * - dummy mode: returns null
+   * - api mode:   GET /api/closing/last
+   */
+  fetchClosing: function() {
+    if (DATA_SOURCE === 'api') {
+      return fetch(API_BASE_URL + '/api/closing/last', { headers: API_HEADERS })
+        .then(function(res) { return res.json(); });
+    }
+    return Promise.resolve(null);
+  },
+
+  /**
+   * Subscribe to SSE events from the backend.
+   * Calls onClosing(data) when a new closing arrives.
+   * Returns an object with a disconnect() method.
+   */
+  subscribeEvents: function(onClosing) {
+    if (DATA_SOURCE !== 'api' || typeof EventSource === 'undefined') {
+      return { disconnect: function() {} };
+    }
+    var es = new EventSource(API_BASE_URL + '/api/events');
+    es.addEventListener('closing', function(e) {
+      try { onClosing(JSON.parse(e.data)); } catch(err) {}
+    });
+    return {
+      disconnect: function() { es.close(); }
+    };
   },
 
   /**

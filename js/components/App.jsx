@@ -26,6 +26,12 @@ function App() {
   const [showCd, setShowCd]     = useState(false);
 
   const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Expose package updater for SSE-triggered refreshes from BuyNotif
+  window.Alburaq._onPackagesUpdate = function(pkgs) {
+    setState(function(s) { return Object.assign({}, s, { packages: pkgs }); });
+  };
 
   // Load initial data on mount (from localStorage → dataService)
   useEffect(function(){
@@ -33,10 +39,17 @@ function App() {
       setState(data);
       setLoading(false);
     });
+    return function() { window.Alburaq._onPackagesUpdate = null; };
   }, []);
 
   useEffect(function(){ helpers.saveSt(state); }, [state]);
   useEffect(function(){ setEditMode(tweaks.editMode); }, [tweaks.editMode]);
+
+  useEffect(function(){
+    function onScroll(){ setScrolled(window.scrollY > 80); }
+    window.addEventListener('scroll', onScroll, {passive: true});
+    return function(){ window.removeEventListener('scroll', onScroll); };
+  }, []);
 
   function updPkg(u) {
     setState(function(s){ return Object.assign({}, s, {packages: s.packages.map(function(p){ return p.id === u.id ? u : p; })}); });
@@ -94,12 +107,13 @@ function App() {
       <Ticker packages={state.packages}/>
 
       <main className="main">
+        <div className='overlay'></div>
         {tweaks.showCountdown && (
-          <div className="cd-wrap">
+          <div className={'cd-wrap' + (scrolled ? ' cd-stuck' : '')}>
             <CDTimer iso={state.cd.iso} lbl={state.cd.lbl}/>
           </div>
         )}
-        <div className="pkg-grid">
+        <div className={'pkg-grid' + (scrolled ? ' pkg-grid-scrolled' : '')}>
           {state.packages.filter(function(pkg){
             var cap = pkg.buses.reduce(function(s, b){ return s + b.cap; }, 0);
             var fil = pkg.buses.reduce(function(s, b){ return s + Math.min(b.fil, b.cap); }, 0);
