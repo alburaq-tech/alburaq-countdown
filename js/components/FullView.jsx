@@ -64,7 +64,15 @@ function FullView({pkg, onUpdate, onBack}) {
                 value={pkg.displayRemainingPax}
                 onChange={function(e){
                   var raw = e.target.value.replace(/[^0-9]/g, '');
-                  setDisplayRemaining(raw);
+                  var n = parseInt(raw);
+                  if (isNaN(n) || n < 0) n = 0;
+                  if (n > cap) n = cap;
+                  onUpdate(Object.assign({}, pkg, {displayRemainingPax: n}));
+                }}
+                onKeyDown={function(e){
+                  if (e.key === 'Enter') {
+                    e.target.blur();
+                  }
                 }}
                 onBlur={function(e){
                   var n = parseInt(e.target.value);
