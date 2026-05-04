@@ -8,7 +8,7 @@ const C = window.Alburaq.constants;
 const seatSt = window.Alburaq.helpers.seatSt;
 const clampFil = window.Alburaq.helpers.clampFil;
 
-function BusRow({bus, onEdit, editMode}) {
+function BusRow({bus, onEdit}) {
   const effectiveFil = clampFil(bus.fil, bus.cap);
   const locked = bus.locked || 0;
   const displayRem = bus.displayRem != null ? bus.displayRem : (bus.cap - effectiveFil);
@@ -41,7 +41,7 @@ function BusRow({bus, onEdit, editMode}) {
         })}
       </div>
       <div className="bus-status">
-        {st.t === 'full' && <div className="bus-status-full">🚫 SUDAH PENUH!</div>}
+        {st.t === 'full' && <div className="bus-status-full">🚫PENUH!</div>}
         {st.t === 'crit' && (
           <div>
             <div className="bus-status-crit-badge">⚠ HAMPIR HABIS!</div>
@@ -63,22 +63,6 @@ function BusRow({bus, onEdit, editMode}) {
         {locked > 0 && <div className="bus-locked-info">🔒 {locked} seat terkunci</div>}
       </div>
       <div className="bus-fill-info">{effectiveFil}/{bus.cap} terisi</div>
-      {editMode && (
-        <div className="bus-edit-overlay">
-          <div className="edit-field">
-            <label className="edit-label">Label</label>
-            <input value={bus.lbl} className="inp inp-w-lg" onChange={function(e){onEdit(Object.assign({}, bus, {lbl: e.target.value}))}} />
-          </div>
-          <div className="edit-field">
-            <label className="edit-label">Kapasitas</label>
-            <input type="number" min="1" max="70" value={bus.cap} className="inp inp-w-sm" onChange={function(e){onEdit(Object.assign({}, bus, {cap: Number(e.target.value)}))}} />
-          </div>
-          <div className="edit-field">
-            <label className="edit-label">Terisi</label>
-            <input type="number" min="0" max={bus.cap} value={bus.fil} className="inp inp-w-sm" onChange={function(e){onEdit(Object.assign({}, bus, {fil: Math.min(Number(e.target.value), bus.cap)}))}} />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

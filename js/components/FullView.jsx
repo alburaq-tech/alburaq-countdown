@@ -7,7 +7,7 @@ const C = window.Alburaq.constants;
 const seatSt = window.Alburaq.helpers.seatSt;
 const clampFil = window.Alburaq.helpers.clampFil;
 
-function FullView({pkg, onUpdate, onBack, editMode}) {
+function FullView({pkg, onUpdate, onBack}) {
   const cap = pkg.buses.reduce(function(s, b){ return s + b.cap; }, 0);
   const fil = pkg.buses.reduce(function(s, b){ return s + clampFil(b.fil, b.cap); }, 0);
   const backendRem = cap - fil;
@@ -153,29 +153,11 @@ function FullView({pkg, onUpdate, onBack, editMode}) {
                     )}
                     {busLocked > 0 && <div className="bus-locked-info">🔒 {busLocked} seat terkunci</div>}
                   </div>
-                  {editMode && (
-                    <div className="fv-bus-edit-overlay">
-                      <div className="edit-field">
-                        <label className="edit-label">Label</label>
-                        <input value={bus.lbl} className="inp inp-w-xl" onChange={function(e){onUpdate(Object.assign({}, pkg, {buses: pkg.buses.map(function(b){return b.id === bus.id ? Object.assign({}, b, {lbl: e.target.value}) : b; })}));}}/>
-                      </div>
-                      <div className="edit-field">
-                        <label className="edit-label">Kapasitas</label>
-                        <input type="number" min="1" max="70" value={bus.cap} className="inp inp-w-md" onChange={function(e){onUpdate(Object.assign({}, pkg, {buses: pkg.buses.map(function(b){return b.id === bus.id ? Object.assign({}, b, {cap: Number(e.target.value)}) : b; })}));}}/>
-                      </div>
-                      <div className="edit-field">
-                        <label className="edit-label">Terisi</label>
-                        <input type="number" min="0" max={bus.cap} value={bus.fil} className="inp inp-w-md" onChange={function(e){onUpdate(Object.assign({}, pkg, {buses: pkg.buses.map(function(b){return b.id === bus.id ? Object.assign({}, b, {fil: Math.min(Number(e.target.value), bus.cap)}) : b; })}));}}/>
-                      </div>
-                      {pkg.buses.length > 1 && <button className="del-bus-btn" onClick={function(){onUpdate(Object.assign({}, pkg, {buses: pkg.buses.filter(function(b){return b.id !== bus.id; })}));}}>Hapus</button>}
-                    </div>
-                  )}
                 </div>
               );
             });
           })()}
         </div>
-        {editMode && <button className="fv-add-bus" onClick={addBus}>+ Tambah Bus</button>}
       </div>
       <div className="fv-footer-bar"/>
       <div className="fv-footer"><span className="fv-footer-text">TEKAN ESC UNTUK KEMBALI</span></div>

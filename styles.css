@@ -328,27 +328,27 @@ body {
 }
 
 .cd-box {
-    background: #1C1C1C;
+    /* background: #1C1C1C; */
     border-radius: 16px;
-    padding: 20px 36px;
+    padding: 0px 36px;
     text-align: center;
-    box-shadow: 0 4px 32px rgba(28, 28, 28, .15)
+    /* box-shadow: 0 4px 32px rgba(28, 28, 28, .15) */
 }
 
 .cd-label {
-    font-size: 10px;
+    font-size: 20px;
     letter-spacing: 4px;
     color: #CBAA48;
     text-transform: uppercase;
     font-family: 'Cinzel', serif;
     font-weight: 700;
-    margin-bottom: 12px
+    /* margin-bottom: 12px */
 }
 
 .cd-digits {
     display: flex;
     align-items: center;
-    gap: 8px;
+    /* gap: 8px; */
     justify-content: center
 }
 
@@ -357,7 +357,7 @@ body {
     font-weight: 900;
     color: #AE8C2F;
     line-height: 1;
-    padding-bottom: 16px;
+    padding-top: 6px;
     animation: blink 1s ease-in-out infinite
 }
 
@@ -370,18 +370,18 @@ body {
 }
 
 .cd-num {
-    font-size: 52px;
+    font-size: 100px;
     font-weight: 700;
     font-family: 'Playfair Display', serif;
     line-height: 1;
-    color: #CBAA48;
+    color: #332701;
     animation: glowNum 2s ease-in-out infinite
 }
 
 .cd-unit-label {
     font-size: 9px;
     letter-spacing: 3px;
-    color: #AE8C2F;
+    color: #332701;
     font-family: 'Cinzel', serif;
     font-weight: 700
 }
@@ -427,7 +427,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: 24px;    
     flex: 5
 }
 
@@ -492,7 +492,8 @@ body {
     font-family: 'Playfair Display', serif;
     line-height: 1;
     -webkit-text-stroke: 1px #1C1C1C;
-    text-shadow: 0 3px 10px rgba(28, 28, 28, .3)
+    text-shadow: 0 3px 10px rgba(28, 28, 28, .3);
+    transform: translateY(-20%)
 }
 
 .pkg-card-pax-sub {

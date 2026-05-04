@@ -21,7 +21,6 @@ const TWEAK_DEFAULTS = window.Alburaq.tweakDefaults;
 function App() {
   const [state, setState]     = useState({ packages: [], cd: { lbl: '', iso: new Date().toISOString() } });
   const [loading, setLoading]  = useState(true);
-  const [editMode, setEditMode] = useState(false);
   const [focusId, setFocusId]   = useState(null);
   const [showCd, setShowCd]     = useState(false);
 
@@ -42,7 +41,7 @@ function App() {
   }, []);
 
   useEffect(function(){ helpers.saveSt(state); }, [state]);
-  useEffect(function(){ setEditMode(tweaks.editMode); }, [tweaks.editMode]);
+
 
   function updPkg(u) {
     setState(function(s){ return Object.assign({}, s, {packages: s.packages.map(function(p){ return p.id === u.id ? u : p; })}); });
@@ -88,7 +87,6 @@ function App() {
           </div>
         </div>
         <div className="header-right">
-          {editMode && <div className="edit-badge">✏ EDIT MODE</div>}
           <button className="gear-btn" onClick={function(){window.postMessage({ type: '__activate_edit_mode' }, '*')}} title="Tweaks">🎨</button>
           <button className="gear-btn" onClick={function(){setShowCd(true)}} title="Setting Countdown">⚙️</button>
           <div className="live-badge">
@@ -114,8 +112,7 @@ function App() {
           }).map(function(pkg){
             return (
               <div key={pkg.id} className="pkg-grid-item">
-                <PkgCard pkg={pkg} onUpdate={updPkg} editMode={editMode} onClick={function(){setFocusId(pkg.id)}}/>
-                {editMode && <button className="del-btn" onClick={function(){delPkg(pkg.id)}}>×</button>}
+                <PkgCard pkg={pkg} onUpdate={updPkg} onClick={function(){setFocusId(pkg.id)}}/>
               </div>
             );
           })}
@@ -129,8 +126,7 @@ function App() {
             return soldOutPkgs.map(function(pkg){
               return (
                 <div key={pkg.id} className="pkg-grid-item pkg-grid-item-soldout">
-                  <PkgCard pkg={pkg} onUpdate={updPkg} editMode={editMode} onClick={function(){setFocusId(pkg.id)}}/>
-                  {editMode && <button className="del-btn" onClick={function(){delPkg(pkg.id)}}>×</button>}
+                  <PkgCard pkg={pkg} onUpdate={updPkg} onClick={function(){setFocusId(pkg.id)}}/>
                 </div>
               );
             });
@@ -140,14 +136,14 @@ function App() {
 
       {tweaks.showNotif && <BuyNotif packages={state.packages} interval={5000}/>}
 
-      {focusPkg && <FullView pkg={focusPkg} onUpdate={updPkg} onBack={function(){setFocusId(null)}} editMode={editMode}/>}
+      {focusPkg && <FullView pkg={focusPkg} onUpdate={updPkg} onBack={function(){setFocusId(null)}}/>}
       {showCd && <CDModal cd={state.cd} onClose={function(){setShowCd(false)}} onSave={function(c){setState(function(s){return Object.assign({}, s, {cd: c});}); dataService.saveCountdown(c); setShowCd(false);}}/>}
 
       <window.TweaksPanel>
         <window.TweakSection label="Tampilan"/>
         <window.TweakToggle label="Tampilkan Countdown" value={tweaks.showCountdown} onChange={function(v){setTweak('showCountdown', v)}}/>
         <window.TweakToggle label="Tampilkan Notifikasi" value={tweaks.showNotif} onChange={function(v){setTweak('showNotif', v)}}/>
-        <window.TweakToggle label="Mode Edit Data" value={tweaks.editMode} onChange={function(v){setTweak('editMode', v)}}/>
+
         <window.TweakSection label="Timer"/>
         <window.TweakButton label="✏ Edit Countdown" onClick={function(){setShowCd(true)}}/>
         <window.TweakSection label="Reset"/>
