@@ -75,7 +75,7 @@ function PkgCard({pkg, onUpdate, onClick}) {
   }
 
   return (
-    <div className={'pkg-card' + (isSoldOut ? ' pkg-card-soldout' : '')} onClick={isSoldOut ? undefined : onClick}>
+    <div className={'pkg-card' + (isSoldOut ? ' pkg-card-soldout' : '')} onClick={onClick}>
       <div className="pkg-card-top-bar"/>
       <div className="pkg-card-header">
         <div className="pkg-card-info">
@@ -94,30 +94,25 @@ function PkgCard({pkg, onUpdate, onClick}) {
           <div className="pkg-card-pax-sub">dari {cap} kursi</div>
         </div>
       </div>
-      {isSoldOut ? (
-        <div className="pkg-card-soldout-body">
-          <div className="soldout-badge">🚫 SOLD OUT</div>
-          <div className="soldout-summary">{pkg.buses.length} bus · {cap} kursi penuh terisi</div>
+      <React.Fragment>
+        <div className="pkg-card-bar-wrap">
+          <div className="pkg-card-bar-header">
+            <span className="pkg-card-bar-label">TERISI</span>
+            <span className="pkg-card-bar-pct" style={{color: pctColor}}>{pct}%</span>
+          </div>
+          <div className="pkg-card-bar-track">
+            <div className="pkg-card-bar-fill" style={{width: pct + '%', background: barBg}}/>
+          </div>
         </div>
-      ) : (
-        <React.Fragment>
-          <div className="pkg-card-bar-wrap">
-            <div className="pkg-card-bar-header">
-              <span className="pkg-card-bar-label">TERISI</span>
-              <span className="pkg-card-bar-pct" style={{color: pctColor}}>{pct}%</span>
-            </div>
-            <div className="pkg-card-bar-track">
-              <div className="pkg-card-bar-fill" style={{width: pct + '%', background: barBg}}/>
-            </div>
-          </div>
-          <div className="pkg-card-buses">
-            {displayBuses.map(function(bus){
-              return <BusRow key={bus.id} bus={bus} onEdit={function(u){handleBusEdit(bus.id, u)}} />;
-            })}
-
-          </div>
-        </React.Fragment>
-      )}
+        <div className="pkg-card-buses">
+          {displayBuses.map(function(bus){
+            return <BusRow key={bus.id} bus={bus} onEdit={function(u){handleBusEdit(bus.id, u)}} />;
+          })}
+        </div>
+        {isSoldOut && (
+          <div className="pkg-card-soldout-watermark">SOLD OUT</div>
+        )}
+      </React.Fragment>
     </div>
   );
 }

@@ -105,32 +105,13 @@ function App() {
           </div>
         )}
         <div className="pkg-grid">
-          {state.packages.filter(function(pkg){
-            var cap = pkg.buses.reduce(function(s, b){ return s + b.cap; }, 0);
-            var fil = pkg.buses.reduce(function(s, b){ return s + Math.min(b.fil, b.cap); }, 0);
-            return cap - fil > 0;
-          }).map(function(pkg){
+          {state.packages.map(function(pkg){
             return (
               <div key={pkg.id} className="pkg-grid-item">
                 <PkgCard pkg={pkg} onUpdate={updPkg} onClick={function(){setFocusId(pkg.id)}}/>
               </div>
             );
           })}
-          {(function(){
-            var soldOutPkgs = state.packages.filter(function(pkg){
-              var cap = pkg.buses.reduce(function(s, b){ return s + b.cap; }, 0);
-              var fil = pkg.buses.reduce(function(s, b){ return s + Math.min(b.fil, b.cap); }, 0);
-              return cap - fil === 0;
-            });
-            if (!soldOutPkgs.length) return null;
-            return soldOutPkgs.map(function(pkg){
-              return (
-                <div key={pkg.id} className="pkg-grid-item pkg-grid-item-soldout">
-                  <PkgCard pkg={pkg} onUpdate={updPkg} onClick={function(){setFocusId(pkg.id)}}/>
-                </div>
-              );
-            });
-          })()}
         </div>
       </main>
 
