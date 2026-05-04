@@ -273,14 +273,53 @@ body {
 /* ── Main ── */
 .main {
     flex: 1;
-    padding: 0 32px;
-    max-width: 1280px;
     margin: 0 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     min-height: 0
+}
+
+.pkg-grid-wrap {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    background: none
+}
+
+.pkg-grid-nav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    border: none;
+    background: none;
+    color: #AE8C2F;
+    font-size: 32px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    padding: 0;
+    opacity: .5;
+    transition: opacity .15s;
+    z-index: 5
+}
+
+.pkg-grid-nav:hover {
+    opacity: 1
+}
+
+.pkg-grid-nav-left {
+    left: 0
+}
+
+.pkg-grid-nav-right {
+    right: 0
 }
 
 .pkg-grid {
@@ -292,7 +331,8 @@ body {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    min-height: 0
+    min-height: 0;
+    height: 100%
 }
 
 .pkg-grid::-webkit-scrollbar {
@@ -312,8 +352,8 @@ body {
 .pkg-grid-item {
     flex: 0 0 100%;
     scroll-snap-align: start;
-    min-height: 0;
-    padding: 0 16px 16px 16px
+    height: 100%;
+    padding: 0 80px 16px 80px
 }
 
 /* ── Countdown ── */

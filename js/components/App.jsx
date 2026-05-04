@@ -23,6 +23,13 @@ function App() {
   const [loading, setLoading]  = useState(true);
   const [focusId, setFocusId]   = useState(null);
   const [showCd, setShowCd]     = useState(false);
+  const gridRef = React.useRef(null);
+
+  function scrollGrid(dir) {
+    var el = gridRef.current;
+    if (!el) return;
+    el.scrollBy({left: dir * el.offsetWidth, behavior: 'smooth'});
+  }
 
   const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
 
@@ -104,14 +111,18 @@ function App() {
             <CDTimer iso={state.cd.iso} lbl={state.cd.lbl}/>
           </div>
         )}
-        <div className="pkg-grid">
-          {state.packages.map(function(pkg){
-            return (
-              <div key={pkg.id} className="pkg-grid-item">
-                <PkgCard pkg={pkg} onUpdate={updPkg} onClick={function(){setFocusId(pkg.id)}}/>
-              </div>
-            );
-          })}
+        <div className="pkg-grid-wrap">
+          <button className="pkg-grid-nav pkg-grid-nav-left" onClick={function(){scrollGrid(-1)}} title="Sebelumnya">‹</button>
+          <div className="pkg-grid" ref={gridRef}>
+            {state.packages.map(function(pkg){
+              return (
+                <div key={pkg.id} className="pkg-grid-item">
+                  <PkgCard pkg={pkg} onUpdate={updPkg} onClick={function(){setFocusId(pkg.id)}}/>
+                </div>
+              );
+            })}
+          </div>
+          <button className="pkg-grid-nav pkg-grid-nav-right" onClick={function(){scrollGrid(1)}} title="Selanjutnya">›</button>
         </div>
       </main>
 
