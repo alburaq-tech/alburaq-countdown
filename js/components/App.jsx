@@ -19,7 +19,7 @@ const BuyNotif = window.Alburaq.BuyNotif;
 const TWEAK_DEFAULTS = window.Alburaq.tweakDefaults;
 
 function App() {
-  const [state, setState]     = useState({ packages: [], cd: { lbl: '', iso: new Date().toISOString() } });
+  const [state, setState]     = useState({ packages: [], cd: { lbl: '', iso: new Date().toISOString() }, recentBuyers: [], lastUpdated: null });
   const [loading, setLoading]  = useState(true);
   const [focusId, setFocusId]   = useState(null);
   const [showCd, setShowCd]     = useState(false);
@@ -41,10 +41,42 @@ function App() {
   // Load initial data on mount (from localStorage → dataService)
   useEffect(function(){
     helpers.loadInitialData().then(function(data){
-      setState(data);
+      setState({
+        packages: data.packages || [],
+        cd: data.cd || { lbl: '', iso: new Date().toISOString() },
+        recentBuyers: data.recentBuyers || [],
+        lastUpdated: data.lastUpdated || null
+      });
       setLoading(false);
     });
     return function() { window.Alburaq._onPackagesUpdate = null; };
+  }, []);
+
+  // Subscribe to SSE refresh events for auto-refresh
+  useEffect(function() {
+    var ds = window.Alburaq.dataService;
+    if (ds.getDataSource() !== 'api' || typeof EventSource === 'undefined') return;
+
+    var es = new EventSource(ds.API_BASE_URL + '/api/events');
+    es.addEventListener('refresh', function(e) {
+      try {
+        var data = JSON.parse(e.data);
+        if (data.packages) {
+          setState(function(s) {
+            return Object.assign({}, s, {
+              packages: data.packages,
+              recentBuyers: data.recentBuyers || s.recentBuyers,
+              lastUpdated: data.lastUpdated || s.lastUpdated
+            });
+          });
+          if (window.Alburaq._onPackagesUpdate) {
+            window.Alburaq._onPackagesUpdate(data.packages);
+          }
+        }
+      } catch(err) {}
+    });
+
+    return function() { es.close(); };
   }, []);
 
   useEffect(function(){ helpers.saveSt(state); }, [state]);
@@ -94,6 +126,11 @@ function App() {
           </div>
         </div>
         <div className="header-right">
+          {state.lastUpdated && (
+            <div className="last-updated">
+              Update: {new Date(state.lastUpdated).toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})}
+            </div>
+          )}
           <button className="gear-btn" onClick={function(){window.postMessage({ type: '__activate_edit_mode' }, '*')}} title="Tweaks">🎨</button>
           <button className="gear-btn" onClick={function(){setShowCd(true)}} title="Setting Countdown">⚙️</button>
           <div className="live-badge">
@@ -126,7 +163,7 @@ function App() {
         </div>
       </main>
 
-      {tweaks.showNotif && <BuyNotif packages={state.packages} interval={5000}/>}
+      {tweaks.showNotif && <BuyNotif packages={state.packages} recentBuyers={state.recentBuyers} interval={5000}/>}
 
       {focusPkg && <FullView pkg={focusPkg} onUpdate={updPkg} onBack={function(){setFocusId(null)}}/>}
       {showCd && <CDModal cd={state.cd} onClose={function(){setShowCd(false)}} onSave={function(c){setState(function(s){return Object.assign({}, s, {cd: c});}); dataService.saveCountdown(c); setShowCd(false);}}/>}

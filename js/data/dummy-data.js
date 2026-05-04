@@ -13,7 +13,7 @@ window.Alburaq = window.Alburaq || {};
 window.Alburaq.dummyData = {
   // Increment DATA_VERSION when dummy data changes.
   // This invalidates stale localStorage cache so fresh data is always loaded.
-  _version: 15,
+  _version: 16,
 
   packages: [
     {

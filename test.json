@@ -1,0 +1,385 @@
+{
+    "DP": {
+        "id": "bb37c664-35d0-4bbd-b48b-29af8b6ea8de",
+        "type": "number",
+        "number": null
+    },
+    "KTP": {
+        "id": "susB",
+        "type": "files",
+        "files": [{
+            "file": {
+                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/6f9d1ff6-4740-4b57-b3b9-b742889c372a/37957c68-d18f-4d0d-b126-f45a4a65a5a1/PASPOR__KTP_AMINAH.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZV4WYA67%2F20250221%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250221T133043Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIBYTMlUyLpBnaBtyCtcZ64Ef6KppPmgf%2FaQPbB5dcFrcAiEA0tyCK94RxnlGE%2BvYqbNvx0B1Sb23jM8ekJmYv3UhkScqiAQI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDJdNwWQeOSKcPuDzvyrcAw0geVMIZUrYB%2Bns09o%2BEzJNQimv57jheXjPQFOg4g8zVsnYL8FZUdQ5oS%2Bipr0A0lhUmS5HFz9S89xC7%2BY9sP3TGC8XFsGFL3zhDhZRFyjBdrdlqXIkENRKi4qbL3aCbSld%2FwJ5XOJapm7yp%2Fc%2F7pAEcTC9w6ao4TZxIVcXUo%2BT5bO0rhRA5busP15M0Q1brXVqr6WwD4r7W1xYooYXU08Ewr3J506vMDoIBo8%2BAgkJglerGFPFdXMhVgumtvMryed1OcdjNPyF6YuthhZGTiYhC1Z7o3lhRfVW4R16eF%2BfN3N15n2dksm3thzpjA%2F61%2BqQq5JJLqzGpvsaQZXTvZI0AIjb8ea5VBJMYqSWIQ9dozYHaDyKqeS8x%2BKKCKoTlh45LfYKeeklNHtjkx8d9ur%2BCjA6OZszJdJowxHtXrc2ZHn9nvgOuet%2BjdlpiTQKqpnkjIRvQBbkZ%2FAvC6n95uuRpEL8y4ZpJAFF8cenAPqrj3%2FD6a%2BtBgyZNJMKSRWOg%2FmP4ZbWFFFye43ZqsoNJf6kWdrqUJMuxe1UhFy5m9AlhxwkYKcmxDW6GTqEVVcnO20sIwVn4N2rtpMrlMq1aMs00MdACHVDYEXJh0bgvNax%2Fz4Kgz7i3rXMZVo6MPnj4b0GOqUBytK8sidNwXWz%2B0l6FO1uO7DUzJpzZZI6d8rQ6o0pnrUhEH30fQ6602oWvUhBD0rUGC09WAl4ydZN4Xwbx02T5gFY4GJFA0zvvarMKeqiRbWa%2B7LeTJJsyXTbtk0PXH8HwlXNfoMl%2FLlrr%2FuTfQnsZxJxwu%2BuEz08q63rXRyWQVSJ4I5es6PxEV6g9nXFlEM1p95%2FJkCbA7NRR1BnD%2FVCfFkISow5&X-Amz-Signature=d309ea81875dea92aa18df6a86ba6d34cd63d751edd87c227e5af5ea1237cf21&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "expiry_time": "2025-02-21T14:30:43.398Z"
+            },
+            "name": "PASPOR & KTP AMINAH.pdf",
+            "type": "file"
+        }, {
+            "file": {
+                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/6f9d1ff6-4740-4b57-b3b9-b742889c372a/09151cf7-7f93-418f-a89f-5a5894a95474/PASPOR__KTP_BACO_TANG.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZV4WYA67%2F20250221%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250221T133043Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIBYTMlUyLpBnaBtyCtcZ64Ef6KppPmgf%2FaQPbB5dcFrcAiEA0tyCK94RxnlGE%2BvYqbNvx0B1Sb23jM8ekJmYv3UhkScqiAQI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDJdNwWQeOSKcPuDzvyrcAw0geVMIZUrYB%2Bns09o%2BEzJNQimv57jheXjPQFOg4g8zVsnYL8FZUdQ5oS%2Bipr0A0lhUmS5HFz9S89xC7%2BY9sP3TGC8XFsGFL3zhDhZRFyjBdrdlqXIkENRKi4qbL3aCbSld%2FwJ5XOJapm7yp%2Fc%2F7pAEcTC9w6ao4TZxIVcXUo%2BT5bO0rhRA5busP15M0Q1brXVqr6WwD4r7W1xYooYXU08Ewr3J506vMDoIBo8%2BAgkJglerGFPFdXMhVgumtvMryed1OcdjNPyF6YuthhZGTiYhC1Z7o3lhRfVW4R16eF%2BfN3N15n2dksm3thzpjA%2F61%2BqQq5JJLqzGpvsaQZXTvZI0AIjb8ea5VBJMYqSWIQ9dozYHaDyKqeS8x%2BKKCKoTlh45LfYKeeklNHtjkx8d9ur%2BCjA6OZszJdJowxHtXrc2ZHn9nvgOuet%2BjdlpiTQKqpnkjIRvQBbkZ%2FAvC6n95uuRpEL8y4ZpJAFF8cenAPqrj3%2FD6a%2BtBgyZNJMKSRWOg%2FmP4ZbWFFFye43ZqsoNJf6kWdrqUJMuxe1UhFy5m9AlhxwkYKcmxDW6GTqEVVcnO20sIwVn4N2rtpMrlMq1aMs00MdACHVDYEXJh0bgvNax%2Fz4Kgz7i3rXMZVo6MPnj4b0GOqUBytK8sidNwXWz%2B0l6FO1uO7DUzJpzZZI6d8rQ6o0pnrUhEH30fQ6602oWvUhBD0rUGC09WAl4ydZN4Xwbx02T5gFY4GJFA0zvvarMKeqiRbWa%2B7LeTJJsyXTbtk0PXH8HwlXNfoMl%2FLlrr%2FuTfQnsZxJxwu%2BuEz08q63rXRyWQVSJ4I5es6PxEV6g9nXFlEM1p95%2FJkCbA7NRR1BnD%2FVCfFkISow5&X-Amz-Signature=61299e664ccc08a657c9c3b40b2b0a3cc54f66507225419c18a347388375baf0&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "expiry_time": "2025-02-21T14:30:43.553Z"
+            },
+            "name": "PASPOR & KTP BACO TANG.pdf",
+            "type": "file"
+        }, {
+            "file": {
+                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/6f9d1ff6-4740-4b57-b3b9-b742889c372a/83f7b425-5ccc-4e9f-8ffa-55da19546925/img20241221_16285726.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZV4WYA67%2F20250221%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250221T133043Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIBYTMlUyLpBnaBtyCtcZ64Ef6KppPmgf%2FaQPbB5dcFrcAiEA0tyCK94RxnlGE%2BvYqbNvx0B1Sb23jM8ekJmYv3UhkScqiAQI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDJdNwWQeOSKcPuDzvyrcAw0geVMIZUrYB%2Bns09o%2BEzJNQimv57jheXjPQFOg4g8zVsnYL8FZUdQ5oS%2Bipr0A0lhUmS5HFz9S89xC7%2BY9sP3TGC8XFsGFL3zhDhZRFyjBdrdlqXIkENRKi4qbL3aCbSld%2FwJ5XOJapm7yp%2Fc%2F7pAEcTC9w6ao4TZxIVcXUo%2BT5bO0rhRA5busP15M0Q1brXVqr6WwD4r7W1xYooYXU08Ewr3J506vMDoIBo8%2BAgkJglerGFPFdXMhVgumtvMryed1OcdjNPyF6YuthhZGTiYhC1Z7o3lhRfVW4R16eF%2BfN3N15n2dksm3thzpjA%2F61%2BqQq5JJLqzGpvsaQZXTvZI0AIjb8ea5VBJMYqSWIQ9dozYHaDyKqeS8x%2BKKCKoTlh45LfYKeeklNHtjkx8d9ur%2BCjA6OZszJdJowxHtXrc2ZHn9nvgOuet%2BjdlpiTQKqpnkjIRvQBbkZ%2FAvC6n95uuRpEL8y4ZpJAFF8cenAPqrj3%2FD6a%2BtBgyZNJMKSRWOg%2FmP4ZbWFFFye43ZqsoNJf6kWdrqUJMuxe1UhFy5m9AlhxwkYKcmxDW6GTqEVVcnO20sIwVn4N2rtpMrlMq1aMs00MdACHVDYEXJh0bgvNax%2Fz4Kgz7i3rXMZVo6MPnj4b0GOqUBytK8sidNwXWz%2B0l6FO1uO7DUzJpzZZI6d8rQ6o0pnrUhEH30fQ6602oWvUhBD0rUGC09WAl4ydZN4Xwbx02T5gFY4GJFA0zvvarMKeqiRbWa%2B7LeTJJsyXTbtk0PXH8HwlXNfoMl%2FLlrr%2FuTfQnsZxJxwu%2BuEz08q63rXRyWQVSJ4I5es6PxEV6g9nXFlEM1p95%2FJkCbA7NRR1BnD%2FVCfFkISow5&X-Amz-Signature=75c3dea79ef13968fddc0a0cf571c0535a6c4aa81cfd1701a2d36bdae7d8af1a&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "expiry_time": "2025-02-21T14:30:43.673Z"
+            },
+            "name": "img20241221_16285726.pdf",
+            "type": "file"
+        }]
+    },
+    "Text": {
+        "id": "uojF",
+        "type": "rich_text",
+        "rich_text": []
+    },
+    "Lokasi": {
+        "id": "Cu%40%60",
+        "type": "rich_text",
+        "rich_text": [{
+            "href": null,
+            "text": {
+                "link": null,
+                "content": "Makassar"
+            },
+            "type": "text",
+            "plain_text": "Makassar",
+            "annotations": {
+                "bold": false,
+                "code": false,
+                "color": "default",
+                "italic": false,
+                "underline": false,
+                "strikethrough": false
+            }
+        }]
+    },
+    "Produk": {
+        "id": "TYfg",
+        "type": "multi_select",
+        "multi_select": [{
+            "id": "a79b247a-a366-473a-8322-145089576b50",
+            "name": "Paket Full Ramadan Hotel",
+            "color": "gray"
+        }]
+    },
+    "Status": {
+        "id": "QSd%3A",
+        "type": "status",
+        "status": {
+            "id": "slCl",
+            "name": "Lunas",
+            "color": "green"
+        }
+    },
+    "Text 1": {
+        "id": "%5C%3EZq",
+        "type": "rich_text",
+        "rich_text": []
+    },
+    "Text 2": {
+        "id": "YF%5Ef",
+        "type": "rich_text",
+        "rich_text": []
+    },
+    "Text 3": {
+        "id": "dVay",
+        "type": "rich_text",
+        "rich_text": []
+    },
+    "Text 4": {
+        "id": "xOEg",
+        "type": "rich_text",
+        "rich_text": []
+    },
+    "add on": {
+        "id": "zRbF",
+        "type": "multi_select",
+        "multi_select": []
+    },
+    "source": {
+        "id": "_FbO",
+        "type": "select",
+        "select": {
+            "id": "83f9aa11-c228-45c4-a41b-8c2815a235dc",
+            "name": "fb direct wa",
+            "color": "gray"
+        }
+    },
+    "WA Group": {
+        "id": "r%7Bwg",
+        "type": "select",
+        "select": {
+            "id": "fc739af5-9d52-4d38-9f8d-9db22c716817",
+            "name": "VII Komunitas Mekah Jalur Murah",
+            "color": "brown"
+        }
+    },
+    "CS Onsite": {
+        "id": "BcpW",
+        "type": "multi_select",
+        "multi_select": []
+    },
+    "jumlah dp": {
+        "id": "gRoK",
+        "type": "number",
+        "number": 110000000
+    },
+    "Catatan FU": {
+        "id": "YaCQ",
+        "type": "rich_text",
+        "rich_text": [{
+            "href": null,
+            "text": {
+                "link": null,
+                "content": "2pax paket full Ramadhan hotel kamar double (55jt/pax) dan 1pax full Ramadhan apartemen 2 (31.5jt). Upgrade maskapai Saudi tambah 1 juta/pax. Total tagihan 110jt+31.5jt+3jt = 144.5jt. Awal DP 15jt, cicilan pertama 19.5jt dan pelunasan 110jt.\n visa done"
+            },
+            "type": "text",
+            "plain_text": "2pax paket full Ramadhan hotel kamar double (55jt/pax) dan 1pax full Ramadhan apartemen 2 (31.5jt). Upgrade maskapai Saudi tambah 1 juta/pax. Total tagihan 110jt+31.5jt+3jt = 144.5jt. Awal DP 15jt, cicilan pertama 19.5jt dan pelunasan 110jt.\n visa done",
+            "annotations": {
+                "bold": false,
+                "code": false,
+                "color": "default",
+                "italic": false,
+                "underline": false,
+                "strikethrough": false
+            }
+        }]
+    },
+    "add on (1)": {
+        "id": "ZeBD",
+        "type": "multi_select",
+        "multi_select": []
+    },
+    "tanggal dp": {
+        "id": "xKvO",
+        "date": {
+            "end": null,
+            "start": "2025-01-31",
+            "time_zone": null
+        },
+        "type": "date"
+    },
+    "FU Lanjutan": {
+        "id": "d%7DS%5E",
+        "date": null,
+        "type": "date"
+    },
+    "Scan Paspor": {
+        "id": "p%7DQr",
+        "type": "files",
+        "files": []
+    },
+    "Visit Kantor": {
+        "id": "RXud",
+        "date": null,
+        "type": "date"
+    },
+    "Account Owner": {
+        "id": "YW%5Er",
+        "type": "people",
+        "people": [{
+            "id": "12bd872b-594c-81f7-a40c-0002f30a3386",
+            "name": "unggul (jamaah bekas resti)",
+            "type": "person",
+            "object": "user",
+            "person": {
+                "email": "firzacahyaningm@gmail.com"
+            },
+            "avatar_url": null
+        }]
+    },
+    "Jadwal Pulang": {
+        "id": "mBid",
+        "date": {
+            "end": null,
+            "start": "2025-04-02",
+            "time_zone": null
+        },
+        "type": "date"
+    },
+    "Leads Created": {
+        "id": "asEN",
+        "date": {
+            "end": null,
+            "start": "2024-11-15T08:28:00.000+00:00",
+            "time_zone": null
+        },
+        "type": "date"
+    },
+    "Potensi Sales": {
+        "id": "w%40F%3B",
+        "type": "number",
+        "number": 144500000
+    },
+    "Save Nomor WA": {
+        "id": "aXyf",
+        "type": "select",
+        "select": {
+            "id": "3b0e8a1b-0fb6-46e6-9c9d-31535440cd11",
+            "name": "sudah",
+            "color": "red"
+        }
+    },
+    "jumlah jamaah": {
+        "id": "c293d7c0-77e8-4f86-8223-281314fad9d4",
+        "type": "number",
+        "number": null
+    },
+    "total tagihan": {
+        "id": "8bb4d933-25f6-4332-a3f3-da329ffd2fb7",
+        "type": "number",
+        "number": null
+    },
+    "Bukti Transfer": {
+        "id": "D%7C%3Bq",
+        "type": "files",
+        "files": [{
+            "file": {
+                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/6f9d1ff6-4740-4b57-b3b9-b742889c372a/fefff05b-654e-4771-b8d0-bcfb4bfebafd/WhatsApp_Image_2024-12-03_at_07.02.46.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZV4WYA67%2F20250221%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250221T133043Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIBYTMlUyLpBnaBtyCtcZ64Ef6KppPmgf%2FaQPbB5dcFrcAiEA0tyCK94RxnlGE%2BvYqbNvx0B1Sb23jM8ekJmYv3UhkScqiAQI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDJdNwWQeOSKcPuDzvyrcAw0geVMIZUrYB%2Bns09o%2BEzJNQimv57jheXjPQFOg4g8zVsnYL8FZUdQ5oS%2Bipr0A0lhUmS5HFz9S89xC7%2BY9sP3TGC8XFsGFL3zhDhZRFyjBdrdlqXIkENRKi4qbL3aCbSld%2FwJ5XOJapm7yp%2Fc%2F7pAEcTC9w6ao4TZxIVcXUo%2BT5bO0rhRA5busP15M0Q1brXVqr6WwD4r7W1xYooYXU08Ewr3J506vMDoIBo8%2BAgkJglerGFPFdXMhVgumtvMryed1OcdjNPyF6YuthhZGTiYhC1Z7o3lhRfVW4R16eF%2BfN3N15n2dksm3thzpjA%2F61%2BqQq5JJLqzGpvsaQZXTvZI0AIjb8ea5VBJMYqSWIQ9dozYHaDyKqeS8x%2BKKCKoTlh45LfYKeeklNHtjkx8d9ur%2BCjA6OZszJdJowxHtXrc2ZHn9nvgOuet%2BjdlpiTQKqpnkjIRvQBbkZ%2FAvC6n95uuRpEL8y4ZpJAFF8cenAPqrj3%2FD6a%2BtBgyZNJMKSRWOg%2FmP4ZbWFFFye43ZqsoNJf6kWdrqUJMuxe1UhFy5m9AlhxwkYKcmxDW6GTqEVVcnO20sIwVn4N2rtpMrlMq1aMs00MdACHVDYEXJh0bgvNax%2Fz4Kgz7i3rXMZVo6MPnj4b0GOqUBytK8sidNwXWz%2B0l6FO1uO7DUzJpzZZI6d8rQ6o0pnrUhEH30fQ6602oWvUhBD0rUGC09WAl4ydZN4Xwbx02T5gFY4GJFA0zvvarMKeqiRbWa%2B7LeTJJsyXTbtk0PXH8HwlXNfoMl%2FLlrr%2FuTfQnsZxJxwu%2BuEz08q63rXRyWQVSJ4I5es6PxEV6g9nXFlEM1p95%2FJkCbA7NRR1BnD%2FVCfFkISow5&X-Amz-Signature=9bd9189c77e2a6d62645c31bb18f8b00c34c1eea6bed4c83202874f84db63c45&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "expiry_time": "2025-02-21T14:30:43.060Z"
+            },
+            "name": "WhatsApp Image 2024-12-03 at 07.02.46.jpeg",
+            "type": "file",
+            "external": null
+        }, {
+            "file": {
+                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/6f9d1ff6-4740-4b57-b3b9-b742889c372a/821b4a64-3641-42ad-acf1-14202d94bde9/WhatsApp_Image_2025-01-02_at_10.22.40.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZV4WYA67%2F20250221%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250221T133043Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIBYTMlUyLpBnaBtyCtcZ64Ef6KppPmgf%2FaQPbB5dcFrcAiEA0tyCK94RxnlGE%2BvYqbNvx0B1Sb23jM8ekJmYv3UhkScqiAQI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDJdNwWQeOSKcPuDzvyrcAw0geVMIZUrYB%2Bns09o%2BEzJNQimv57jheXjPQFOg4g8zVsnYL8FZUdQ5oS%2Bipr0A0lhUmS5HFz9S89xC7%2BY9sP3TGC8XFsGFL3zhDhZRFyjBdrdlqXIkENRKi4qbL3aCbSld%2FwJ5XOJapm7yp%2Fc%2F7pAEcTC9w6ao4TZxIVcXUo%2BT5bO0rhRA5busP15M0Q1brXVqr6WwD4r7W1xYooYXU08Ewr3J506vMDoIBo8%2BAgkJglerGFPFdXMhVgumtvMryed1OcdjNPyF6YuthhZGTiYhC1Z7o3lhRfVW4R16eF%2BfN3N15n2dksm3thzpjA%2F61%2BqQq5JJLqzGpvsaQZXTvZI0AIjb8ea5VBJMYqSWIQ9dozYHaDyKqeS8x%2BKKCKoTlh45LfYKeeklNHtjkx8d9ur%2BCjA6OZszJdJowxHtXrc2ZHn9nvgOuet%2BjdlpiTQKqpnkjIRvQBbkZ%2FAvC6n95uuRpEL8y4ZpJAFF8cenAPqrj3%2FD6a%2BtBgyZNJMKSRWOg%2FmP4ZbWFFFye43ZqsoNJf6kWdrqUJMuxe1UhFy5m9AlhxwkYKcmxDW6GTqEVVcnO20sIwVn4N2rtpMrlMq1aMs00MdACHVDYEXJh0bgvNax%2Fz4Kgz7i3rXMZVo6MPnj4b0GOqUBytK8sidNwXWz%2B0l6FO1uO7DUzJpzZZI6d8rQ6o0pnrUhEH30fQ6602oWvUhBD0rUGC09WAl4ydZN4Xwbx02T5gFY4GJFA0zvvarMKeqiRbWa%2B7LeTJJsyXTbtk0PXH8HwlXNfoMl%2FLlrr%2FuTfQnsZxJxwu%2BuEz08q63rXRyWQVSJ4I5es6PxEV6g9nXFlEM1p95%2FJkCbA7NRR1BnD%2FVCfFkISow5&X-Amz-Signature=a927bdd53d125d461ccb403aa14301328932f0a9ee54db12268f81aad6641eaf&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "expiry_time": "2025-02-21T14:30:43.188Z"
+            },
+            "name": "WhatsApp Image 2025-01-02 at 10.22.40.jpeg",
+            "type": "file",
+            "external": null
+        }, {
+            "file": null,
+            "name": "brdsg.com/img/_/brwcjtmsbryk2hmko0_1/CyBaAIKLlaSuCnLCyBGmbknBV0hysxTGKoUzxcycvIhQ.jpg",
+            "type": "external",
+            "external": {
+                "url": "https://brdsg.com/img/_/brwcjtmsbryk2hmko0_1/CyBaAIKLlaSuCnLCyBGmbknBV0hysxTGKoUzxcycvIhQ.jpg"
+            }
+        }, {
+            "file": null,
+            "name": "brdsg.com/img/_/brwcjtmsbryk2hmko0_1/C1IUudVjTACV0QKC1OC892O1loQLcWQFavLZHkXGxV8Q.jpg",
+            "type": "external",
+            "external": {
+                "url": "https://brdsg.com/img/_/brwcjtmsbryk2hmko0_1/C1IUudVjTACV0QKC1OC892O1loQLcWQFavLZHkXGxV8Q.jpg"
+            }
+        }]
+    },
+    "Kartu keluarga": {
+        "id": "W%3Dn%40",
+        "type": "files",
+        "files": [{
+            "file": {
+                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/6f9d1ff6-4740-4b57-b3b9-b742889c372a/ddb03097-32db-41bf-8273-4d1d3044c086/KARTU_KELUARGA.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZV4WYA67%2F20250221%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250221T133043Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIBYTMlUyLpBnaBtyCtcZ64Ef6KppPmgf%2FaQPbB5dcFrcAiEA0tyCK94RxnlGE%2BvYqbNvx0B1Sb23jM8ekJmYv3UhkScqiAQI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDJdNwWQeOSKcPuDzvyrcAw0geVMIZUrYB%2Bns09o%2BEzJNQimv57jheXjPQFOg4g8zVsnYL8FZUdQ5oS%2Bipr0A0lhUmS5HFz9S89xC7%2BY9sP3TGC8XFsGFL3zhDhZRFyjBdrdlqXIkENRKi4qbL3aCbSld%2FwJ5XOJapm7yp%2Fc%2F7pAEcTC9w6ao4TZxIVcXUo%2BT5bO0rhRA5busP15M0Q1brXVqr6WwD4r7W1xYooYXU08Ewr3J506vMDoIBo8%2BAgkJglerGFPFdXMhVgumtvMryed1OcdjNPyF6YuthhZGTiYhC1Z7o3lhRfVW4R16eF%2BfN3N15n2dksm3thzpjA%2F61%2BqQq5JJLqzGpvsaQZXTvZI0AIjb8ea5VBJMYqSWIQ9dozYHaDyKqeS8x%2BKKCKoTlh45LfYKeeklNHtjkx8d9ur%2BCjA6OZszJdJowxHtXrc2ZHn9nvgOuet%2BjdlpiTQKqpnkjIRvQBbkZ%2FAvC6n95uuRpEL8y4ZpJAFF8cenAPqrj3%2FD6a%2BtBgyZNJMKSRWOg%2FmP4ZbWFFFye43ZqsoNJf6kWdrqUJMuxe1UhFy5m9AlhxwkYKcmxDW6GTqEVVcnO20sIwVn4N2rtpMrlMq1aMs00MdACHVDYEXJh0bgvNax%2Fz4Kgz7i3rXMZVo6MPnj4b0GOqUBytK8sidNwXWz%2B0l6FO1uO7DUzJpzZZI6d8rQ6o0pnrUhEH30fQ6602oWvUhBD0rUGC09WAl4ydZN4Xwbx02T5gFY4GJFA0zvvarMKeqiRbWa%2B7LeTJJsyXTbtk0PXH8HwlXNfoMl%2FLlrr%2FuTfQnsZxJxwu%2BuEz08q63rXRyWQVSJ4I5es6PxEV6g9nXFlEM1p95%2FJkCbA7NRR1BnD%2FVCfFkISow5&X-Amz-Signature=d6cefac88caf92549fdf827e7d6deea0926915e875ca4085c5f2ff656815307d&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "expiry_time": "2025-02-21T14:30:43.277Z"
+            },
+            "name": "KARTU KELUARGA.pdf",
+            "type": "file"
+        }]
+    },
+    "No WA (08xxxxx)": {
+        "id": "D%5Dfl",
+        "type": "phone_number",
+        "phone_number": "6281338353989"
+    },
+    "Tahapan Closing": {
+        "id": "w%7CdA",
+        "type": "multi_select",
+        "multi_select": [{
+            "id": "wG:=",
+            "name": "Chat",
+            "color": "yellow"
+        }, {
+            "id": "XzuG",
+            "name": "Webinar",
+            "color": "brown"
+        }, {
+            "id": "gYzf",
+            "name": "Telponan",
+            "color": "pink"
+        }]
+    },
+    "Jadwal Berangkat": {
+        "id": "%3EB%3EV",
+        "date": {
+            "end": null,
+            "start": "2025-03-01",
+            "time_zone": null
+        },
+        "type": "date"
+    },
+    "Last edited time": {
+        "id": "vy%3C%5C",
+        "type": "last_edited_time",
+        "last_edited_time": "2025-02-21T09:11:00.000Z"
+    },
+    "Nomor Telpon (WA)": {
+        "id": "427198d2-8d9e-49ed-9899-ef15247db3c4",
+        "type": "phone_number",
+        "phone_number": null
+    },
+    "tanggal pelunasan": {
+        "id": "s~jY",
+        "date": null,
+        "type": "date"
+    },
+    "Bukti Transfer (1)": {
+        "id": "s%5DMr",
+        "type": "files",
+        "files": []
+    },
+    "dedi achmad efendi": {
+        "id": "title",
+        "type": "title",
+        "title": [{
+            "href": null,
+            "text": {
+                "link": null,
+                "content": "Agus Jamaluddin"
+            },
+            "type": "text",
+            "plain_text": "Agus Jamaluddin",
+            "annotations": {
+                "bold": false,
+                "code": false,
+                "color": "default",
+                "italic": false,
+                "underline": false,
+                "strikethrough": false
+            }
+        }]
+    },
+    "Sudah selesai Umroh ": {
+        "id": "cAt_",
+        "type": "rich_text",
+        "rich_text": []
+    },
+    "tanggal keberangkatan": {
+        "id": "b5d140d9-544f-4fba-8970-97d1e1a48432",
+        "date": null,
+        "type": "date"
+    },
+    "Jumlah Anggota Rombongan": {
+        "id": "xDHc",
+        "type": "number",
+        "number": 3
+    },
+    "Catatan / Kebutuhan Khusus": {
+        "id": "5b8eba9c-1240-4c59-8fd6-58acd600852d",
+        "type": "rich_text",
+        "rich_text": []
+    },
+    "Nama lengkap sesuai paspor": {
+        "id": "a0fd6e4d-4368-48fa-9f1c-9cdd6194815d",
+        "type": "rich_text",
+        "rich_text": []
+    },
+    "nomor HP Contact person (cp)": {
+        "id": "d19457bd-10eb-416b-8075-ee1ef6802bbc",
+        "type": "phone_number",
+        "phone_number": null
+    }
+}

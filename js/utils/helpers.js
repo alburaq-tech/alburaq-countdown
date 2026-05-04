@@ -9,7 +9,8 @@ window.Alburaq.helpers = {
 
   /**
    * Load state from localStorage.
-   * Returns parsed state object or null if not found or version mismatch.
+   * Returns parsed state object or null if not found, version mismatch,
+   * or data source changed.
    */
   loadSt: function() {
     try {
@@ -23,6 +24,12 @@ window.Alburaq.helpers = {
         localStorage.removeItem('alburaq4');
         return null;
       }
+      // Invalidate cache if data source changed (e.g. dummy → api)
+      var currentDataSource = window.Alburaq.dataService.getDataSource();
+      if (data._dataSource !== currentDataSource) {
+        localStorage.removeItem('alburaq4');
+        return null;
+      }
       return data;
     } catch(e) {
       return null;
@@ -31,11 +38,14 @@ window.Alburaq.helpers = {
 
   /**
    * Save state to localStorage.
-   * Automatically stamps with current data version for cache invalidation.
+   * Automatically stamps with current data version and data source for cache invalidation.
    */
   saveSt: function(s) {
     try {
-      var versioned = Object.assign({}, s, { _version: (window.Alburaq.dummyData && window.Alburaq.dummyData._version) || 0 });
+      var versioned = Object.assign({}, s, {
+        _version: (window.Alburaq.dummyData && window.Alburaq.dummyData._version) || 0,
+        _dataSource: window.Alburaq.dataService.getDataSource()
+      });
       localStorage.setItem('alburaq4', JSON.stringify(versioned));
     } catch(e) {}
   },

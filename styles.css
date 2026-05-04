@@ -205,6 +205,14 @@ body {
     gap: 10px
 }
 
+.last-updated {
+    font-size: 10px;
+    color: #888;
+    letter-spacing: .5px;
+    font-weight: 500;
+    margin-right: 6px
+}
+
 .edit-badge {
     background: rgba(26, 122, 64, .1);
     border: 1px solid #1A7A40;
@@ -1573,6 +1581,14 @@ body {
     font-weight: 800
 }
 
+.buy-notif-date {
+    font-size: 14px;
+    color: #E0D0A0;
+    font-weight: 400;
+    margin-top: 4px;
+    letter-spacing: .2px
+}
+
 @media (max-width: 640px) {
     .buy-notif-inner {
         padding: 14px 20px;
@@ -1588,5 +1604,9 @@ body {
 
     .buy-notif-text {
         font-size: 16px
+    }
+
+    .buy-notif-date {
+        font-size: 12px
     }
 }

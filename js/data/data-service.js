@@ -19,7 +19,7 @@ window.Alburaq = window.Alburaq || {};
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ⚙️  CONFIGURATION — Change DATA_SOURCE to switch between dummy & API
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-var DATA_SOURCE = 'dummy';  // 'dummy' | 'api'
+var DATA_SOURCE = 'api';  // 'dummy' | 'api'
 var API_BASE_URL = 'http://localhost:3000';  // backend API server
 var API_HEADERS = {           // customize as needed (auth tokens, etc.)
   'Content-Type': 'application/json'
@@ -33,26 +33,32 @@ window.Alburaq.dataService = {
 
   /**
    * Load the initial application state.
-   * Returns: { packages: Package[], cd: { lbl: string, iso: string } }
+   * Returns: { packages: Package[], cd: { lbl: string, iso: string }, recentBuyers: Buyer[] }
    *
    * - dummy mode: returns dummy data immediately
-   * - api mode:   fetches from /api/packages + /api/countdown
+   * - api mode:   fetches from /api/packages + /api/countdown + /api/recent-buyers
    */
   loadInitialState: function() {
     if (DATA_SOURCE === 'api') {
       return Promise.all([
         window.Alburaq.dataService.fetchPackages(),
-        window.Alburaq.dataService.fetchCountdown()
+        window.Alburaq.dataService.fetchCountdown(),
+        window.Alburaq.dataService.fetchRecentBuyers()
       ]).then(function(results) {
-        return { packages: results[0], cd: results[1] };
+        var lastUpdated = null;
+        if (window.Alburaq._lastPackagesResponse) {
+          lastUpdated = window.Alburaq._lastPackagesResponse.lastUpdated || null;
+        }
+        return { packages: results[0], cd: results[1], recentBuyers: results[2], lastUpdated: lastUpdated };
       });
     }
     // dummy mode — return synchronously wrapped in a resolved promise
-    // so callers can always use .then() or await
     var dummy = window.Alburaq.dummyData;
     return Promise.resolve({
       packages: dummy.packages,
-      cd: dummy.cd
+      cd: dummy.cd,
+      recentBuyers: [],
+      lastUpdated: null
     });
   },
 
@@ -65,7 +71,10 @@ window.Alburaq.dataService = {
     if (DATA_SOURCE === 'api') {
       return fetch(API_BASE_URL + '/api/packages', { headers: API_HEADERS })
         .then(function(res) { return res.json(); })
-        .then(function(data) { return data.packages; });
+        .then(function(data) {
+          window.Alburaq._lastPackagesResponse = data;
+          return data.packages;
+        });
     }
     return Promise.resolve(window.Alburaq.dummyData.packages);
   },
@@ -131,14 +140,29 @@ window.Alburaq.dataService = {
   },
 
   /**
-   * Fetch last closing event.
-   * - dummy mode: returns null
-   * - api mode:   GET /api/closing/last
+   * Fetch recent buyers.
+   * - dummy mode: returns empty array
+   * - api mode:   GET /api/recent-buyers
    */
-  fetchClosing: function() {
+  fetchRecentBuyers: function() {
     if (DATA_SOURCE === 'api') {
-      return fetch(API_BASE_URL + '/api/closing/last', { headers: API_HEADERS })
-        .then(function(res) { return res.json(); });
+      return fetch(API_BASE_URL + '/api/recent-buyers', { headers: API_HEADERS })
+        .then(function(res) { return res.json(); })
+        .then(function(data) { return data.buyers || []; });
+    }
+    return Promise.resolve([]);
+  },
+
+  /**
+   * Fetch a random recent buyer.
+   * - dummy mode: returns null
+   * - api mode:   GET /api/recent-buyers/random
+   */
+  fetchRandomBuyer: function() {
+    if (DATA_SOURCE === 'api') {
+      return fetch(API_BASE_URL + '/api/recent-buyers/random', { headers: API_HEADERS })
+        .then(function(res) { return res.json(); })
+        .then(function(data) { return data.buyer || null; });
     }
     return Promise.resolve(null);
   },
