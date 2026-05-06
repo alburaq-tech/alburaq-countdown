@@ -4,9 +4,16 @@
 
 const seatSt = window.Alburaq.helpers.seatSt;
 
-function Ticker({packages}) {
+function Ticker({packages, category}) {
+  var filtered = packages;
+  if (category) {
+    filtered = packages.filter(function(p) {
+      if (category === 'ramadhan') return p.is_umrah_ramadhan === true;
+      return p.is_umrah_ramadhan !== true;
+    });
+  }
   const items = [];
-  packages.forEach(function(p){
+  filtered.forEach(function(p){
     p.buses.forEach(function(b){
       const st = seatSt(b.fil, b.cap);
       if(st.t === 'full') items.push('🚫 ' + p.name + ' · ' + b.lbl + ': SUDAH PENUH');

@@ -23,6 +23,24 @@ function App() {
   const [loading, setLoading]  = useState(true);
   const [focusId, setFocusId]   = useState(null);
   const [showCd, setShowCd]     = useState(false);
+  const [category, setCategory] = useState(function() {
+    var saved = null;
+    try { saved = localStorage.getItem('alburaq_category'); } catch(e) {}
+    return saved === 'reguler' ? 'reguler' : 'ramadhan';
+  });
+
+  function toggleCategory() {
+    setCategory(function(prev) {
+      var next = prev === 'ramadhan' ? 'reguler' : 'ramadhan';
+      try { localStorage.setItem('alburaq_category', next); } catch(e) {}
+      return next;
+    });
+  }
+
+  var filteredPackages = state.packages.filter(function(pkg) {
+    if (category === 'ramadhan') return pkg.is_umrah_ramadhan === true;
+    return pkg.is_umrah_ramadhan !== true;
+  });
   const gridRef = React.useRef(null);
 
   function scrollGrid(dir) {
@@ -125,7 +143,7 @@ function App() {
           <img src="assets/logo-alburaq.png" alt="Alburaq" className="header-logo"/>
           <div>
             <div className="header-title">ALBURAQ UNITED INDONESIA</div>
-            <div className="header-subtitle">Ketersediaan Seat Umroh 2025</div>
+            <div className="header-subtitle">Ketersediaan Seat Umroh {category === 'ramadhan' ? 'Ramadhan' : 'Reguler'} 2025</div>
           </div>
         </div>
         <div className="header-right">
@@ -134,6 +152,9 @@ function App() {
               Update: {new Date(state.lastUpdated).toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})}
             </div>
           )}
+          <button className="category-toggle" onClick={toggleCategory} title={category === 'ramadhan' ? 'Lihat paket Reguler' : 'Lihat paket Ramadhan'}>
+            🔄 {category === 'ramadhan' ? 'Reguler' : 'Ramadhan'}
+          </button>
           <button className="gear-btn" onClick={function(){window.postMessage({ type: '__activate_edit_mode' }, '*')}} title="Tweaks">🎨</button>
           <button className="gear-btn" onClick={function(){setShowCd(true)}} title="Setting Countdown">⚙️</button>
           <div className="live-badge">
@@ -143,7 +164,7 @@ function App() {
         </div>
       </header>
 
-      <Ticker packages={state.packages}/>
+      <Ticker packages={state.packages} category={category}/>
 
       <main className="main">
         {tweaks.showCountdown && (
@@ -154,19 +175,30 @@ function App() {
         <div className="pkg-grid-wrap">
           <button className="pkg-grid-nav pkg-grid-nav-left" onClick={function(){scrollGrid(-1)}} title="Sebelumnya">‹</button>
           <div className="pkg-grid" ref={gridRef}>
-            {state.packages.map(function(pkg){
-              return (
-                <div key={pkg.id} className="pkg-grid-item">
-                  <PkgCard pkg={pkg} onUpdate={updPkg} onClick={function(){setFocusId(pkg.id)}}/>
-                </div>
-              );
-            })}
+            {filteredPackages.length === 0 ? (
+              <div className="empty-state">
+                <div className="empty-state-icon">📭</div>
+                <div className="empty-state-msg">Tidak ada paket {category === 'ramadhan' ? 'Ramadhan' : 'Reguler'} tersedia saat ini</div>
+                <button className="empty-state-switch" onClick={toggleCategory}>
+                  Lihat Paket {category === 'ramadhan' ? 'Reguler' : 'Ramadhan'}
+                </button>
+              </div>
+            ) : (
+              filteredPackages.map(function(pkg){
+                return (
+                  <div key={pkg.id} className="pkg-grid-item">
+                    <PkgCard pkg={pkg} onUpdate={updPkg} onClick={function(){setFocusId(pkg.id)}}/>
+                  </div>
+                );
+              })
+            )}
           </div>
           <button className="pkg-grid-nav pkg-grid-nav-right" onClick={function(){scrollGrid(1)}} title="Selanjutnya">›</button>
         </div>
       </main>
 
       {tweaks.showNotif && <BuyNotif packages={state.packages} recentBuyers={state.recentBuyers} interval={5000}/>}
+      {/* BuyNotif tetap menampilkan semua notifikasi, tidak difilter kategori */}
 
       {focusPkg && <FullView pkg={focusPkg} onUpdate={updPkg} onBack={function(){setFocusId(null)}}/>}
       {showCd && <CDModal cd={state.cd} onClose={function(){setShowCd(false)}} onSave={function(c){setState(function(s){return Object.assign({}, s, {cd: c});}); dataService.saveCountdown(c); setShowCd(false);}}/>}
