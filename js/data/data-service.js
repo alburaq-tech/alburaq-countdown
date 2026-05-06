@@ -25,6 +25,12 @@ var API_HEADERS = {           // customize as needed (auth tokens, etc.)
   'Content-Type': 'application/json'
 };
 
+// Frontend config (fetched from /api/config on init)
+var _config = {
+  notifIntervalMs: 15000,  // default, overridden by server config
+  anonymizeBuyers: true
+};
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  DATA SERVICE — Public API
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -32,24 +38,51 @@ var API_HEADERS = {           // customize as needed (auth tokens, etc.)
 window.Alburaq.dataService = {
 
   /**
+   * Fetch frontend config from server (notification interval, etc.).
+   * Falls back to defaults if fetch fails.
+   */
+  fetchConfig: function() {
+    if (DATA_SOURCE === 'api') {
+      return fetch(API_BASE_URL + '/api/config', { headers: API_HEADERS })
+        .then(function(res) { return res.json(); })
+        .then(function(cfg) {
+          if (cfg.notifIntervalMs) _config.notifIntervalMs = cfg.notifIntervalMs;
+          if (typeof cfg.anonymizeBuyers === 'boolean') _config.anonymizeBuyers = cfg.anonymizeBuyers;
+          return _config;
+        })
+        .catch(function() { return _config; });
+    }
+    return Promise.resolve(_config);
+  },
+
+  /**
+   * Get the current frontend config.
+   */
+  getConfig: function() {
+    return _config;
+  },
+
+  /**
    * Load the initial application state.
    * Returns: { packages: Package[], cd: { lbl: string, iso: string }, recentBuyers: Buyer[] }
    *
    * - dummy mode: returns dummy data immediately
-   * - api mode:   fetches from /api/packages + /api/countdown + /api/recent-buyers
+   * - api mode:   fetches config, then /api/packages + /api/countdown + /api/recent-buyers
    */
   loadInitialState: function() {
     if (DATA_SOURCE === 'api') {
-      return Promise.all([
-        window.Alburaq.dataService.fetchPackages(),
-        window.Alburaq.dataService.fetchCountdown(),
-        window.Alburaq.dataService.fetchRecentBuyers()
-      ]).then(function(results) {
-        var lastUpdated = null;
-        if (window.Alburaq._lastPackagesResponse) {
-          lastUpdated = window.Alburaq._lastPackagesResponse.lastUpdated || null;
-        }
-        return { packages: results[0], cd: results[1], recentBuyers: results[2], lastUpdated: lastUpdated };
+      return window.Alburaq.dataService.fetchConfig().then(function() {
+        return Promise.all([
+          window.Alburaq.dataService.fetchPackages(),
+          window.Alburaq.dataService.fetchCountdown(),
+          window.Alburaq.dataService.fetchRecentBuyers()
+        ]).then(function(results) {
+          var lastUpdated = null;
+          if (window.Alburaq._lastPackagesResponse) {
+            lastUpdated = window.Alburaq._lastPackagesResponse.lastUpdated || null;
+          }
+          return { packages: results[0], cd: results[1], recentBuyers: results[2], lastUpdated: lastUpdated };
+        });
       });
     }
     // dummy mode — return synchronously wrapped in a resolved promise

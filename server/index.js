@@ -67,6 +67,14 @@ app.use('/api/countdown', countdownRouter);
 app.use('/api/closing', closingRouter);
 app.use('/api/recent-buyers', recentBuyersRouter);
 
+// ── Config endpoint (for frontend) ──────────────────────────
+app.get('/api/config', function(req, res) {
+  res.json({
+    notifIntervalMs: config.notifIntervalMs,
+    anonymizeBuyers: config.anonymizeBuyers
+  });
+});
+
 // ── Static Files (frontend) ───────────────────────────────
 var staticDir = path.resolve(__dirname, '..');
 app.use(express.static(staticDir, {

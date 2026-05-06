@@ -28,12 +28,14 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
   // Random buyer names for dummy mode fallback
   var buyers = [
     'Hamba Allah', 'Hamba Allah', 'Hamba Allah', 'Hamba Allah',
-    'Jamaah dari Jakarta', 'Jamaah dari Bandung', 'Jamaah dari Surabaya',
-    'Jamaah dari Medan', 'Jamaah dari Makassar', 'Jamaah dari Semarang'
+    'Jamaah', 'Jamaah', 'Jamaah', 'Jamaah'
+  ];
+  var buyerCities = [
+    'Jakarta', 'Bandung', 'Surabaya', 'Medan', 'Makassar', 'Semarang'
   ];
 
-  function showNotif(buyer, pkgName, pax, purchaseDate) {
-    setNotif({ buyer: buyer, pkgName: pkgName, pax: pax, time: new Date(), purchaseDate: purchaseDate });
+  function showNotif(buyerName, buyerCity, pkgName, pax, purchaseDate) {
+    setNotif({ buyerName: buyerName, buyerCity: buyerCity || '', pkgName: pkgName, pax: pax, time: new Date(), purchaseDate: purchaseDate });
     setVisible(true);
     if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
     hideTimerRef.current = setTimeout(function() {
@@ -76,10 +78,11 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
 
       subRef.current = ds.subscribeEvents(function(data) {
         // Real closing event from Odoo webhook
-        var buyer = data.city ? 'Jamaah dari ' + data.city : 'Hamba Allah';
+        var buyerName = data.city ? 'Jamaah' : 'Hamba Allah';
+        var buyerCity = data.city || '';
         var pkgName = data.product_name || 'paket umroh';
         var pax = data.pax_count || 1;
-        showNotif(buyer, pkgName, pax);
+        showNotif(buyerName, buyerCity, pkgName, pax);
 
         // Re-fetch packages since pax data changed
         ds.fetchPackages().then(function(pkgs) {
@@ -95,8 +98,7 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
           if (recentBuyersRef.current.length === 0) return;
           var b = recentBuyersRef.current[buyerIndexRef.current % recentBuyersRef.current.length];
           buyerIndexRef.current++;
-          var buyerText = b.jamaah_name + (b.city ? ' dari ' + b.city : '');
-          showNotif(buyerText, b.product_name || 'paket umroh', b.pax_count || 1, b.purchase_date);
+          showNotif(b.jamaah_name, b.city || '', b.product_name || 'paket umroh', b.pax_count || 1, b.purchase_date);
         }, interval);
       }, 2000);
 
@@ -119,9 +121,10 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
       });
       var pool = available.length ? available : packages;
       var pkg = pool[Math.floor(Math.random() * pool.length)];
-      var buyer = buyers[Math.floor(Math.random() * buyers.length)];
+      var buyerName = buyers[Math.floor(Math.random() * buyers.length)];
+      var buyerCity = buyerName === 'Hamba Allah' ? '' : buyerCities[Math.floor(Math.random() * buyerCities.length)];
       var pax = Math.floor(Math.random() * 5) + 1;
-      showNotif(buyer, pkg.name, pax);
+      showNotif(buyerName, buyerCity, pkg.name, pax);
     }
 
     var timer = setTimeout(function() {
@@ -144,7 +147,7 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
         <div className="buy-notif-icon">🛒</div>
         <div className="buy-notif-body">
           <div className="buy-notif-text">
-            <strong>{notif.buyer}</strong> baru saja membeli <strong>{notif.pkgName}</strong> sebanyak <strong>{notif.pax} pax</strong>!
+            <strong>{notif.buyerName}</strong>{notif.buyerCity ? <span> dari <strong>{notif.buyerCity}</strong></span> : null} baru saja membeli <strong>{notif.pkgName}</strong> sebanyak <strong>{notif.pax} pax</strong>!
             {notif.purchaseDate ? (
               <div className="buy-notif-date">pada {fmtDate(notif.purchaseDate)}</div>
             ) : null}

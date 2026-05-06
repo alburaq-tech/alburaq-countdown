@@ -103,7 +103,7 @@ async function fetchRecentBuyers() {
 
     buyers.push({
       quotation_no: q.name || '',
-      jamaah_name: jamaahName,
+      jamaah_name: config.anonymizeBuyers ? 'Hamba Allah' : jamaahName,
       city: cityName,
       product_name: productName,
       product_default_code: productCode,

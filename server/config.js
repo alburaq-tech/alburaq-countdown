@@ -34,4 +34,11 @@ module.exports = {
   recentBuyersDays: parseInt(process.env.RECENT_BUYERS_DAYS, 10) || 14,
   recentBuyersMaxCount: parseInt(process.env.RECENT_BUYERS_MAX_COUNT, 10) || 50,
   recentBuyersFile: process.env.RECENT_BUYERS_FILE || './server/data/recent-buyers.json',
+
+  // Anonymize customer names in recent buyers
+  // When true, jamaah_name is replaced with 'Hamba Allah'
+  anonymizeBuyers: process.env.ANONYMIZE_BUYERS !== 'false', // default: true
+
+  // Buy notification interval (ms) — how often random buyer notifications appear
+  notifIntervalMs: parseInt(process.env.NOTIF_INTERVAL_MS, 10) || 15000, // default: 15 seconds
 };

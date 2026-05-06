@@ -197,7 +197,7 @@ function App() {
         </div>
       </main>
 
-      {tweaks.showNotif && <BuyNotif packages={state.packages} recentBuyers={state.recentBuyers} interval={5000}/>}
+      {tweaks.showNotif && <BuyNotif packages={state.packages} recentBuyers={state.recentBuyers} interval={dataService.getConfig().notifIntervalMs}/>}
       {/* BuyNotif tetap menampilkan semua notifikasi, tidak difilter kategori */}
 
       {focusPkg && <FullView pkg={focusPkg} onUpdate={updPkg} onBack={function(){setFocusId(null)}}/>}
