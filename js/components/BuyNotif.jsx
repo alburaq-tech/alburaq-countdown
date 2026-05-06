@@ -21,10 +21,8 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
   var hideTimerRef = React.useRef(null);
   var subRef = React.useRef(null);
 
-  // Recent buyers from API (shuffled)
-  var _recentBuyers = React.useState([]);
-  var recentBuyers = _recentBuyers[0];
-  var setRecentBuyers = _recentBuyers[1];
+  // Recent buyers from API (shuffled) — stored in ref to avoid infinite loop
+  var recentBuyersRef = React.useRef([]);
   var buyerIndexRef = React.useRef(0);
 
   // Random buyer names for dummy mode fallback
@@ -67,11 +65,11 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
     if (ds.getDataSource() === 'api') {
       // Use recent buyers from props if available, otherwise fetch
       if (recentBuyersProp.length > 0) {
-        setRecentBuyers(shuffle(recentBuyersProp));
+        recentBuyersRef.current = shuffle(recentBuyersProp);
       } else {
         ds.fetchRecentBuyers().then(function(buyers) {
           if (buyers && buyers.length) {
-            setRecentBuyers(shuffle(buyers));
+            recentBuyersRef.current = shuffle(buyers);
           }
         });
       }
@@ -94,8 +92,8 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
       // Random recent buyer notifications
       var randomTimer = setTimeout(function() {
         randomTimer = setInterval(function() {
-          if (recentBuyers.length === 0) return;
-          var b = recentBuyers[buyerIndexRef.current % recentBuyers.length];
+          if (recentBuyersRef.current.length === 0) return;
+          var b = recentBuyersRef.current[buyerIndexRef.current % recentBuyersRef.current.length];
           buyerIndexRef.current++;
           var buyerText = b.jamaah_name + (b.city ? ' dari ' + b.city : '');
           showNotif(buyerText, b.product_name || 'paket umroh', b.pax_count || 1, b.purchase_date);
@@ -136,7 +134,7 @@ window.Alburaq.BuyNotif = function BuyNotif(props) {
       clearInterval(timer);
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
     };
-  }, [packages, interval, recentBuyers]);
+  }, [packages, interval, recentBuyersProp]);
 
   if (!notif) return null;
 

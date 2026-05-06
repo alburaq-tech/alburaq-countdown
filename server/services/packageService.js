@@ -52,7 +52,8 @@ async function getAll(forceRefresh) {
       'departure_date', 'return_date',
       'quota', 'quota_male', 'quota_female',
       'registered_jamaah_count', 'remaining_quota',
-      'group_product', 'list_price'
+      'group_product', 'list_price',
+      'is_umrah_ramadhan'
     ],
     order: 'departure_date asc',
     limit: 200
@@ -80,7 +81,8 @@ async function getAll(forceRefresh) {
         first_return_date: p.return_date || null,
         quota: p.quota || 0,
         list_price: p.list_price || 0,
-        pax_count: 0
+        pax_count: 0,
+        is_umrah_ramadhan: false
       };
       order.push(key);
     }
@@ -100,6 +102,10 @@ async function getAll(forceRefresh) {
     }
     // Sum registered jamaah counts
     g.pax_count += (p.registered_jamaah_count || 0);
+    // OR logic: if any product in group is Ramadhan, the whole group is Ramadhan
+    if (p.is_umrah_ramadhan === true) {
+      g.is_umrah_ramadhan = true;
+    }
   });
 
   var packages = order.map(function(key) {
@@ -111,6 +117,7 @@ async function getAll(forceRefresh) {
       dur: format.formatDurasi(g.first_departure_date, g.first_return_date),
       price: format.formatRupiah(g.list_price),
       buses: busService.generateBuses(g.pax_count, config.busCapacity),
+      is_umrah_ramadhan: g.is_umrah_ramadhan,
       _departure_date: g.first_departure_date // internal sort key
     };
   });

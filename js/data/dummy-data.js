@@ -13,7 +13,7 @@ window.Alburaq = window.Alburaq || {};
 window.Alburaq.dummyData = {
   // Increment DATA_VERSION when dummy data changes.
   // This invalidates stale localStorage cache so fresh data is always loaded.
-  _version: 16,
+  _version: 17,
 
   packages: [
     {
@@ -22,6 +22,7 @@ window.Alburaq.dummyData = {
       dep: '1 Maret 2025',
       dur: '12 Hari',
       price: 'Rp 38.500.000',
+      is_umrah_ramadhan: true,
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 45, fil: 45 },
         { id: 2, lbl: 'BUS 2', cap: 45, fil: 45 },
@@ -35,6 +36,7 @@ window.Alburaq.dummyData = {
       dep: '10 Mei 2025',
       dur: '9 Hari',
       price: 'Rp 28.500.000',
+      is_umrah_ramadhan: false,
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 45, fil: 45 },
         { id: 2, lbl: 'BUS 2', cap: 45, fil: 45 },
@@ -47,6 +49,7 @@ window.Alburaq.dummyData = {
       dep: '5 Juli 2025',
       dur: '14 Hari',
       price: 'Rp 52.000.000',
+      is_umrah_ramadhan: false,
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 40, fil: 40 },
         { id: 2, lbl: 'BUS 2', cap: 40, fil: 40 },
@@ -59,6 +62,7 @@ window.Alburaq.dummyData = {
       dep: '15 Desember 2025',
       dur: '10 Hari',
       price: 'Rp 32.000.000',
+      is_umrah_ramadhan: false,
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 45, fil: 12 }
       ]
@@ -69,6 +73,7 @@ window.Alburaq.dummyData = {
       dep: '8 Agustus 2025',
       dur: '9 Hari',
       price: 'Rp 29.500.000',
+      is_umrah_ramadhan: false,
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 45, fil: 45 },
         { id: 2, lbl: 'BUS 2', cap: 45, fil: 18 }
@@ -80,6 +85,7 @@ window.Alburaq.dummyData = {
       dep: '3 Oktober 2025',
       dur: '16 Hari',
       price: 'Rp 65.000.000',
+      is_umrah_ramadhan: false,
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 35, fil: 35 },
         { id: 2, lbl: 'BUS 2', cap: 35, fil: 10 }
@@ -91,6 +97,7 @@ window.Alburaq.dummyData = {
       dep: '5 Januari 2026',
       dur: '9 Hari',
       price: 'Rp 27.000.000',
+      is_umrah_ramadhan: false,
       buses: [
         { id: 1, lbl: 'BUS 1', cap: 45, fil: 0 }
       ]

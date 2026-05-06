@@ -34,9 +34,12 @@ function App() {
   const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
 
   // Expose package updater for SSE-triggered refreshes from BuyNotif
-  window.Alburaq._onPackagesUpdate = function(pkgs) {
-    setState(function(s) { return Object.assign({}, s, { packages: pkgs }); });
-  };
+  React.useEffect(function() {
+    window.Alburaq._onPackagesUpdate = function(pkgs) {
+      setState(function(s) { return Object.assign({}, s, { packages: pkgs }); });
+    };
+    return function() { window.Alburaq._onPackagesUpdate = null; };
+  }, []);
 
   // Load initial data on mount (from localStorage → dataService)
   useEffect(function(){
