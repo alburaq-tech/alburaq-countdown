@@ -19,10 +19,16 @@ window.Alburaq = window.Alburaq || {};
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ⚙️  CONFIGURATION — Change DATA_SOURCE to switch between dummy & API
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-var DATA_SOURCE = 'dummy';   // 'dummy' | 'api'
-var API_BASE_URL = '';        // e.g. 'https://api.example.com' — set when switching to 'api'
+var DATA_SOURCE = 'api';  // 'dummy' | 'api'
+var API_BASE_URL = '/countdown';  // served under /countdown/ via nginx reverse proxy
 var API_HEADERS = {           // customize as needed (auth tokens, etc.)
   'Content-Type': 'application/json'
+};
+
+// Frontend config (fetched from /api/config on init)
+var _config = {
+  notifIntervalMs: 15000,  // default, overridden by server config
+  anonymizeBuyers: true
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -32,27 +38,60 @@ var API_HEADERS = {           // customize as needed (auth tokens, etc.)
 window.Alburaq.dataService = {
 
   /**
+   * Fetch frontend config from server (notification interval, etc.).
+   * Falls back to defaults if fetch fails.
+   */
+  fetchConfig: function() {
+    if (DATA_SOURCE === 'api') {
+      return fetch(API_BASE_URL + '/api/config', { headers: API_HEADERS })
+        .then(function(res) { return res.json(); })
+        .then(function(cfg) {
+          if (cfg.notifIntervalMs) _config.notifIntervalMs = cfg.notifIntervalMs;
+          if (typeof cfg.anonymizeBuyers === 'boolean') _config.anonymizeBuyers = cfg.anonymizeBuyers;
+          return _config;
+        })
+        .catch(function() { return _config; });
+    }
+    return Promise.resolve(_config);
+  },
+
+  /**
+   * Get the current frontend config.
+   */
+  getConfig: function() {
+    return _config;
+  },
+
+  /**
    * Load the initial application state.
-   * Returns: { packages: Package[], cd: { lbl: string, iso: string } }
+   * Returns: { packages: Package[], cd: { lbl: string, iso: string }, recentBuyers: Buyer[] }
    *
    * - dummy mode: returns dummy data immediately
-   * - api mode:   fetches from /api/packages + /api/countdown
+   * - api mode:   fetches config, then /api/packages + /api/countdown + /api/recent-buyers
    */
   loadInitialState: function() {
     if (DATA_SOURCE === 'api') {
-      return Promise.all([
-        window.Alburaq.dataService.fetchPackages(),
-        window.Alburaq.dataService.fetchCountdown()
-      ]).then(function(results) {
-        return { packages: results[0], cd: results[1] };
+      return window.Alburaq.dataService.fetchConfig().then(function() {
+        return Promise.all([
+          window.Alburaq.dataService.fetchPackages(),
+          window.Alburaq.dataService.fetchCountdown(),
+          window.Alburaq.dataService.fetchRecentBuyers()
+        ]).then(function(results) {
+          var lastUpdated = null;
+          if (window.Alburaq._lastPackagesResponse) {
+            lastUpdated = window.Alburaq._lastPackagesResponse.lastUpdated || null;
+          }
+          return { packages: results[0], cd: results[1], recentBuyers: results[2], lastUpdated: lastUpdated };
+        });
       });
     }
     // dummy mode — return synchronously wrapped in a resolved promise
-    // so callers can always use .then() or await
     var dummy = window.Alburaq.dummyData;
     return Promise.resolve({
       packages: dummy.packages,
-      cd: dummy.cd
+      cd: dummy.cd,
+      recentBuyers: [],
+      lastUpdated: null
     });
   },
 
@@ -65,7 +104,10 @@ window.Alburaq.dataService = {
     if (DATA_SOURCE === 'api') {
       return fetch(API_BASE_URL + '/api/packages', { headers: API_HEADERS })
         .then(function(res) { return res.json(); })
-        .then(function(data) { return data.packages; });
+        .then(function(data) {
+          window.Alburaq._lastPackagesResponse = data;
+          return data.packages;
+        });
     }
     return Promise.resolve(window.Alburaq.dummyData.packages);
   },
@@ -131,6 +173,52 @@ window.Alburaq.dataService = {
   },
 
   /**
+   * Fetch recent buyers.
+   * - dummy mode: returns empty array
+   * - api mode:   GET /api/recent-buyers
+   */
+  fetchRecentBuyers: function() {
+    if (DATA_SOURCE === 'api') {
+      return fetch(API_BASE_URL + '/api/recent-buyers', { headers: API_HEADERS })
+        .then(function(res) { return res.json(); })
+        .then(function(data) { return data.buyers || []; });
+    }
+    return Promise.resolve([]);
+  },
+
+  /**
+   * Fetch a random recent buyer.
+   * - dummy mode: returns null
+   * - api mode:   GET /api/recent-buyers/random
+   */
+  fetchRandomBuyer: function() {
+    if (DATA_SOURCE === 'api') {
+      return fetch(API_BASE_URL + '/api/recent-buyers/random', { headers: API_HEADERS })
+        .then(function(res) { return res.json(); })
+        .then(function(data) { return data.buyer || null; });
+    }
+    return Promise.resolve(null);
+  },
+
+  /**
+   * Subscribe to SSE events from the backend.
+   * Calls onClosing(data) when a new closing arrives.
+   * Returns an object with a disconnect() method.
+   */
+  subscribeEvents: function(onClosing) {
+    if (DATA_SOURCE !== 'api' || typeof EventSource === 'undefined') {
+      return { disconnect: function() {} };
+    }
+    var es = new EventSource(API_BASE_URL + '/api/events');
+    es.addEventListener('closing', function(e) {
+      try { onClosing(JSON.parse(e.data)); } catch(err) {}
+    });
+    return {
+      disconnect: function() { es.close(); }
+    };
+  },
+
+  /**
    * Check current data source mode.
    * Returns 'dummy' or 'api'.
    */
@@ -146,5 +234,9 @@ window.Alburaq.dataService = {
   setDataSource: function(source, baseUrl) {
     DATA_SOURCE = source;
     if (baseUrl) API_BASE_URL = baseUrl;
+  },
+
+  getApiBaseUrl: function() {
+    return API_BASE_URL;
   }
 };
