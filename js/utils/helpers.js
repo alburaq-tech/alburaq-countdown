@@ -30,6 +30,12 @@ window.Alburaq.helpers = {
         localStorage.removeItem('alburaq4');
         return null;
       }
+      // Invalidate cache if API base URL changed (e.g. localhost → /countdown)
+      var currentApiBase = window.Alburaq.dataService.getApiBaseUrl ? window.Alburaq.dataService.getApiBaseUrl() : '';
+      if (data._apiBase !== currentApiBase) {
+        localStorage.removeItem('alburaq4');
+        return null;
+      }
       return data;
     } catch(e) {
       return null;
@@ -44,7 +50,8 @@ window.Alburaq.helpers = {
     try {
       var versioned = Object.assign({}, s, {
         _version: (window.Alburaq.dummyData && window.Alburaq.dummyData._version) || 0,
-        _dataSource: window.Alburaq.dataService.getDataSource()
+        _dataSource: window.Alburaq.dataService.getDataSource(),
+        _apiBase: window.Alburaq.dataService.getApiBaseUrl ? window.Alburaq.dataService.getApiBaseUrl() : ''
       });
       localStorage.setItem('alburaq4', JSON.stringify(versioned));
     } catch(e) {}

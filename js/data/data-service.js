@@ -20,7 +20,7 @@ window.Alburaq = window.Alburaq || {};
 // ⚙️  CONFIGURATION — Change DATA_SOURCE to switch between dummy & API
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 var DATA_SOURCE = 'api';  // 'dummy' | 'api'
-var API_BASE_URL = 'http://localhost:3000';  // backend API server
+var API_BASE_URL = '/countdown';  // served under /countdown/ via nginx reverse proxy
 var API_HEADERS = {           // customize as needed (auth tokens, etc.)
   'Content-Type': 'application/json'
 };
@@ -234,5 +234,9 @@ window.Alburaq.dataService = {
   setDataSource: function(source, baseUrl) {
     DATA_SOURCE = source;
     if (baseUrl) API_BASE_URL = baseUrl;
+  },
+
+  getApiBaseUrl: function() {
+    return API_BASE_URL;
   }
 };

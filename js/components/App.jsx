@@ -26,7 +26,7 @@ function App() {
   const [category, setCategory] = useState(function() {
     var saved = null;
     try { saved = localStorage.getItem('alburaq_category'); } catch(e) {}
-    return saved === 'reguler' ? 'reguler' : 'ramadhan';
+    return saved === 'ramadhan' ? 'ramadhan' : 'reguler';
   });
 
   function toggleCategory() {
@@ -78,7 +78,7 @@ function App() {
     var ds = window.Alburaq.dataService;
     if (ds.getDataSource() !== 'api' || typeof EventSource === 'undefined') return;
 
-    var es = new EventSource(ds.API_BASE_URL + '/api/events');
+    var es = new EventSource(ds.getApiBaseUrl() + '/api/events');
     es.addEventListener('refresh', function(e) {
       try {
         var data = JSON.parse(e.data);
